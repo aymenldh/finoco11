@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "632407554007",
+    "project_id": "choko-finance",
+    "storage_bucket": "choko-finance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632407554007:android:5c0b5f6abd0c1651a03d92",
+        "android_client_info": {
+          "package_name": "com.thewhite.finoco.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCysPUIn6Q0QCKPipLznuRZlvjMmatnz4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
