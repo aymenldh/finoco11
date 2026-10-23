@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 class ExceptionTranslation extends StatelessWidget {
   final int _code;
-  final int _number;
-  final int _nb_visits;
-  final int _nb_reschedule;
+  final int? _number;
+  final int? _nb_visits;
+  final int? _nb_reschedule;
   ExceptionTranslation(
-      {Key key,
-      @required int code,
-      int number,
-      int nb_visits,
-      int nb_reschedule})
+      {Key? key,
+      required int code,
+      int? number,
+      int? nb_visits,
+      int? nb_reschedule})
       : _code = code,
         _number = number,
         _nb_visits = nb_visits,

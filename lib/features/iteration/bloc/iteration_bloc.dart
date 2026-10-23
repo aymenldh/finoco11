@@ -40,10 +40,10 @@ class IterationBloc extends Bloc<IterationEvent, IterationState> {
       int id = await DatabaseHelper.instance
           .insertIteration(event.iteration.toMap());
       for (var e in event.attachements) {
-        File file = File(e.url);
+        File file = File(e.url!);
         try {
           final instant = DateTime.now().microsecondsSinceEpoch.toString() +
-              e.url.split('.').last;
+              e.url!.split('.').last;
           final ref = FirebaseStorage.instance.ref('uploads/$instant');
           await ref.putFile(file);
           final downloadUrl = await ref.getDownloadURL();
@@ -73,14 +73,14 @@ class IterationBloc extends Bloc<IterationEvent, IterationState> {
       }
       _iterations = await DatabaseHelper.instance
           .listIterationsByDossierAndType(
-              event.iteration.idFolder, event.iteration.type.name);
+              event.iteration.idFolder!, event.iteration.type!.name);
       emit(IterationsLoaded(List.from(_iterations)));
     });
 
     on<UpdateIteration>((event, emit) async {
       emit(IterationsLoading());
       var attachements = await DatabaseHelper.instance
-          .getAttachmentsByIdIteration(event.iteration.id);
+          .getAttachmentsByIdIteration(event.iteration.id!);
       for (var attachement in attachements) {
         if (event.attachements
             .where((element) => element.id == attachement.id)
@@ -88,7 +88,7 @@ class IterationBloc extends Bloc<IterationEvent, IterationState> {
           final ref =
               FirebaseStorage.instance.ref('uploads/${attachement.distName}');
           await ref.delete();
-          await DatabaseHelper.instance.deleteAttachment(attachement.id);
+          await DatabaseHelper.instance.deleteAttachment(attachement.id!);
         }
       }
       // event.attachements
@@ -98,32 +98,32 @@ class IterationBloc extends Bloc<IterationEvent, IterationState> {
       // });
 
       await DatabaseHelper.instance
-          .updateIteration(event.iteration.id, event.iteration.toMap());
+          .updateIteration(event.iteration.id!, event.iteration.toMap());
       _iterations = await DatabaseHelper.instance
           .listIterationsByDossierAndType(
-              event.iteration.idFolder, event.iteration.type.name);
+              event.iteration.idFolder!, event.iteration.type!.name);
       emit(IterationsLoaded(List.from(_iterations)));
     });
 
     on<DeleteIteration>((event, emit) async {
       emit(IterationsLoading());
       var attachements = await DatabaseHelper.instance
-          .getAttachmentsByIdIteration(event.iteration.id);
+          .getAttachmentsByIdIteration(event.iteration.id!);
       for (var attachement in attachements) {
         final ref =
             FirebaseStorage.instance.ref('uploads/${attachement.distName}');
         await ref.delete();
-        await DatabaseHelper.instance.deleteAttachment(attachement.id);
+        await DatabaseHelper.instance.deleteAttachment(attachement.id!);
       }
 
-      await DatabaseHelper.instance.deleteIteration(event.iteration.id);
-      synchroNavigatorKey.currentContext
+      await DatabaseHelper.instance.deleteIteration(event.iteration.id!);
+      synchroNavigatorKey.currentContext!
           .read<SyncBloc>()
           .add(LoadDatabaseStats());
 
       _iterations = await DatabaseHelper.instance
           .listIterationsByDossierAndType(
-              event.iteration.idFolder, event.iteration.type.name);
+              event.iteration.idFolder!, event.iteration.type!.name);
       emit(IterationsLoaded(List.from(_iterations)));
     });
   }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class IndicatorAnimatedWidget extends StatelessWidget {
   const IndicatorAnimatedWidget({
-    Key key,
-    @required double padding,
-    @required double width,
-    @required double height,
-    @required Color color,
-    @required this.dotBorderRadius,
+    Key? key,
+    required double padding,
+    required double width,
+    required double height,
+    required Color color,
+    required this.dotBorderRadius,
   })  : _padding = padding,
         _width = width,
         _height = height,

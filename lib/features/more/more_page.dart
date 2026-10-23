@@ -11,7 +11,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../config/theme/colors.dart';
 
 class More extends StatefulWidget {
-  const More({Key key}) : super(key: key);
+  const More({Key? key}) : super(key: key);
 
   @override
   State<More> createState() => _MoreState();

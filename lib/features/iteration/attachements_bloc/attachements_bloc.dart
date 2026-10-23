@@ -27,9 +27,9 @@ class AttachementsBloc extends Bloc<AttachementsEvent, AttachementsState> {
       final ref = FirebaseStorage.instance
           .ref('uploads/${event.attachements.distName}');
       await ref.delete();
-      await DatabaseHelper.instance.deleteAttachment(event.attachements.id);
+      await DatabaseHelper.instance.deleteAttachment(event.attachements.id!);
       _attachementss = await DatabaseHelper.instance
-          .getAttachmentsByIdIteration(event.attachements.idIteration);
+          .getAttachmentsByIdIteration(event.attachements.idIteration!);
       emit(AttachementssLoaded(List.from(_attachementss)));
     });
 

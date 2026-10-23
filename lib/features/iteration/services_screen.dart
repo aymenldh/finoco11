@@ -13,8 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../dossiers/widgets/dossier_totale_widget.dart';
 
 class ServicesScreen extends StatefulWidget {
-  final Dossier dossier;
-  const ServicesScreen({Key key, this.dossier}) : super(key: key);
+  final Dossier? dossier;
+  const ServicesScreen({Key? key, this.dossier}) : super(key: key);
 
   @override
   State<ServicesScreen> createState() => _ServicesScreenState();
@@ -25,7 +25,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget build(BuildContext context) {
     context
         .read<IterationBloc>()
-        .add(LoadIterations(TypeTransaction.SERVICE.name, widget.dossier.id));
+        .add(LoadIterations(TypeTransaction.SERVICE.name, widget.dossier!.id!));
 
     return Stack(
       children: [
@@ -44,7 +44,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               children: state.iterations
                   .map(
                     (item) => InkWell(
-                      onTap: () => clientNavigatorKey.currentState
+                      onTap: () => clientNavigatorKey.currentState!
                           .push(MaterialPageRoute(
                         builder: (context) => IterationDetails(
                           iteration: item,

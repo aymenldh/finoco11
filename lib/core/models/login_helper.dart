@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 class LogInHelper {
-  String email;
-  DateTime lastLogin;
-  int tentative;
-  DateTime blockUntil;
+  String? email;
+  DateTime? lastLogin;
+  int? tentative;
+  DateTime? blockUntil;
   LogInHelper({
     this.email,
     this.lastLogin,
@@ -13,10 +13,10 @@ class LogInHelper {
   });
 
   LogInHelper copyWith({
-    String email,
-    DateTime lastLogin,
-    int tentative,
-    DateTime blockUntil,
+    String? email,
+    DateTime? lastLogin,
+    int? tentative,
+    DateTime? blockUntil,
   }) {
     return LogInHelper(
       email: email ?? this.email,
@@ -29,7 +29,7 @@ class LogInHelper {
   Map<String, dynamic> toMap() {
     return {
       'email': email,
-      'lastLogin': lastLogin.millisecondsSinceEpoch,
+      'lastLogin': lastLogin!.millisecondsSinceEpoch,
       'tentative': tentative,
       'blockUntil': blockUntil?.millisecondsSinceEpoch,
     };

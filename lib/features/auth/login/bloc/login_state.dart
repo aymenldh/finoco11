@@ -39,9 +39,9 @@ class ForceChangePassword extends LoginState {}
 class Failure extends LoginState {
   final int failureCode;
   final String userId;
-  final DateTime blockedUntil;
+  final DateTime? blockedUntil;
   const Failure(
-      {@required this.failureCode, @required this.userId, this.blockedUntil});
+      {required this.failureCode, required this.userId, this.blockedUntil});
 
   @override
   List<Object> get props => [failureCode, userId];

@@ -7,26 +7,26 @@ class Statistiques {
   double totalePaiements30;
   double somme;
   double sommeDevise;
-  String devise;
+  String? devise;
   List<MontantDevise> montantDevises;
-  List<MontantDevise> montantDevisesService;
-  List<MontantDevise> montantDevisesPaiement;
+  List<MontantDevise> montantDevisesService = [];
+  List<MontantDevise> montantDevisesPaiement = [];
 
   Statistiques({
-    this.totalePaiements,
-    this.totaleServices,
-    this.totalePaiements30,
-    this.totaleServices30,
-    this.somme,
-    this.sommeDevise,
-    this.montantDevises,
+    this.totalePaiements = 0,
+    this.totaleServices = 0,
+    this.totalePaiements30 = 0,
+    this.totaleServices30 = 0,
+    this.somme = 0,
+    this.sommeDevise = 0,
+    this.montantDevises = const [],
   });
 
   factory Statistiques.fromJson(Map<String, dynamic> json) {
     return Statistiques(
-      totalePaiements: json['totalePaiements'],
-      totaleServices: json['totaleServices'],
-      somme: json['somme'],
+      totalePaiements: (json['totalePaiements'] as num?)?.toDouble() ?? 0,
+      totaleServices: (json['totaleServices'] as num?)?.toDouble() ?? 0,
+      somme: (json['somme'] as num?)?.toDouble() ?? 0,
     );
   }
 
@@ -39,12 +39,9 @@ class Statistiques {
   }
 
   Statistiques copyWith({
-    String totalePaiements,
-    String somme,
-    String totaleServicesOuverts,
-    int id,
-    int totaleServices,
-    String totalePaiementsOuverts,
+    double? totalePaiements,
+    double? somme,
+    double? totaleServices,
   }) {
     return Statistiques(
       totalePaiements: totalePaiements ?? this.totalePaiements,

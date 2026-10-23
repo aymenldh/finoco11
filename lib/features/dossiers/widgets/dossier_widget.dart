@@ -13,10 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DossierWidget extends StatefulWidget {
-  final Dossier dossier;
-  final Client client;
+  final Dossier? dossier;
+  final Client? client;
   const DossierWidget({
-    Key key,
+    Key? key,
     this.dossier,
     this.client,
   }) : super(key: key);
@@ -31,7 +31,7 @@ class _DossierWidgetState extends State<DossierWidget> {
   Widget build(BuildContext context) {
     return FutureBuilder<double>(
         future: DatabaseHelper.instance
-            .getTotaleDevisePrincipaleByDossier(widget.dossier.id),
+            .getTotaleDevisePrincipaleByDossier(widget.dossier!.id!),
         builder: (context, snapshot) {
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
@@ -54,7 +54,7 @@ class _DossierWidgetState extends State<DossierWidget> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.dossier.name,
+                        widget.dossier!.name!,
                         style: AppThemes.bigTextStyle
                             .copyWith(color: AppColor.sectionTitleColor),
                       ),
@@ -68,7 +68,7 @@ class _DossierWidgetState extends State<DossierWidget> {
                           onSelected: (String value) {
                             // Handle menu item selection
                             if (value == 'Modifier') {
-                              clientNavigatorKey.currentState
+                              clientNavigatorKey.currentState!
                                   .push(MaterialPageRoute(
                                 builder: (context) =>
                                     AddDossierScreen(dossier: widget.dossier),
@@ -121,7 +121,7 @@ class _DossierWidgetState extends State<DossierWidget> {
                                             onPressed: () {
                                               context.read<DossierBloc>().add(
                                                   DeleteDossier(
-                                                      widget.dossier));
+                                                      widget.dossier!));
                                               Navigator.of(context).pop();
                                             },
                                           ),
@@ -140,15 +140,15 @@ class _DossierWidgetState extends State<DossierWidget> {
                                 },
                               );
                             } else if (value == 'Cloturer') {
-                              widget.dossier.statusFolder = false;
+                              widget.dossier!.statusFolder = false;
                               context
                                   .read<DossierBloc>()
-                                  .add(UpdateDossier(widget.dossier));
+                                  .add(UpdateDossier(widget.dossier!));
                             } else if (value == 'ouvrir') {
-                              widget.dossier.statusFolder = true;
+                              widget.dossier!.statusFolder = true;
                               context
                                   .read<DossierBloc>()
-                                  .add(OuvrirDossier(widget.dossier));
+                                  .add(OuvrirDossier(widget.dossier!));
                             }
                           },
                           itemBuilder: (BuildContext context) =>
@@ -157,14 +157,14 @@ class _DossierWidgetState extends State<DossierWidget> {
                               value: 'Modifier',
                               child: Text('Modifier'),
                             ),
-                            if (widget.dossier.statusFolder &&
+                            if (widget.dossier!.statusFolder! &&
                                 snapshot.hasData &&
                                 snapshot.data == 0)
                               const PopupMenuItem<String>(
                                 value: 'Cloturer',
                                 child: Text('Clôturer'),
                               ),
-                            if (!widget.dossier.statusFolder)
+                            if (!widget.dossier!.statusFolder!)
                               const PopupMenuItem<String>(
                                 value: 'ouvrir',
                                 child: Text('Ouvrir'),
@@ -186,10 +186,10 @@ class _DossierWidgetState extends State<DossierWidget> {
                 if (!snapshot.hasData) const SizedBox(),
                 if (snapshot.hasData)
                   Text(
-                      snapshot.data.toStringAsFixed(0) +
+                      snapshot.data!.toStringAsFixed(0) +
                           ' ' +
-                          widget.dossier.devise,
-                      style: snapshot.data.isNegative
+                          widget.dossier!.devise!,
+                      style: snapshot.data!.isNegative
                           ? AppThemes.monnaieTextStyle
                               .copyWith(color: Colors.red)
                           : AppThemes.monnaieTextStyle

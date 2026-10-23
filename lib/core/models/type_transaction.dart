@@ -6,11 +6,11 @@ enum TypeTransaction {
 }
 
 extension TypeTransactionExtension on TypeTransaction {
-  static TypeTransaction fromString(String type) {
-    return TypeTransaction.values.firstWhere(
-      (e) => e.toString().split('.').last == type,
-      orElse: () => null,
-    );
+  static TypeTransaction? fromString(String? type) {
+    for (final e in TypeTransaction.values) {
+      if (e.toString().split('.').last == type) return e;
+    }
+    return null;
   }
 }
 

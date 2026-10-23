@@ -11,8 +11,8 @@ class SyncInitial extends SyncState {}
 class SyncInProgress extends SyncState {}
 
 class SyncSuccess extends SyncState {
-  final TablesStats localStats;
-  final TablesStats remoteStats;
+  final TablesStats? localStats;
+  final TablesStats? remoteStats;
 
   SyncSuccess({this.localStats, this.remoteStats});
 }

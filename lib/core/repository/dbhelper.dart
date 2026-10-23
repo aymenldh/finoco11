@@ -17,16 +17,16 @@ class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._();
   static int NEW_DB_VERSION = 2;
 
-  static Database _database;
+  static Database? _database;
   static const _databaseName = "local_database.db";
   static const _firebaseFilePath = "databases/local_database.db";
 
   DatabaseHelper._();
 
   Future<Database> get database async {
-    if (_database != null) return _database;
+    if (_database != null) return _database!;
     _database = await _initDatabase();
-    return _database;
+    return _database!;
   }
 
   DatabaseHelper._privateConstructor();
@@ -301,9 +301,9 @@ class DatabaseHelper {
 
   Future<void> downloadDatabaseFromFirebase() async {
     try {
-      NEW_DB_VERSION = await _database.getVersion() + 1;
-      if (_database != null && _database.isOpen) {
-        await _database.close();
+      NEW_DB_VERSION = await _database!.getVersion() + 1;
+      if (_database != null && _database!.isOpen) {
+        await _database!.close();
         print('Existing database closed.');
         _database = null;
       }
@@ -562,7 +562,7 @@ class DatabaseHelper {
       double amount = entry["totalAmountDevise"].toDouble();
 
       totalByDevise[devise] = totalByDevise.containsKey(devise)
-          ? totalByDevise[devise] + amount
+          ? totalByDevise[devise]! + amount
           : amount;
     }
 
@@ -572,7 +572,7 @@ class DatabaseHelper {
       double amount = entry["totalAmountDevise"].toDouble();
 
       totalByDevise[devise] = totalByDevise.containsKey(devise)
-          ? totalByDevise[devise] - amount
+          ? totalByDevise[devise]! - amount
           : -amount; // If no service, start with negative amount
     }
 
@@ -751,7 +751,7 @@ class DatabaseHelper {
     return results.map((e) => Client.fromJson(e)).toList().first;
   }
 
-  Future<List<Client>> searchClients(String name, {int limit}) async {
+  Future<List<Client>> searchClients(String name, {int? limit}) async {
     final db = await database;
 
     // Prepare the query to search by first name, last name, and full name

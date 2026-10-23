@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class DeviseScreen extends StatefulWidget {
-  const DeviseScreen({Key key}) : super(key: key);
+  const DeviseScreen({Key? key}) : super(key: key);
 
   @override
   State<DeviseScreen> createState() => _DeviseScreenState();
@@ -57,7 +57,7 @@ class _DeviseScreenState extends State<DeviseScreen> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  e.nom,
+                                  e.nom!,
                                   style: AppThemes.sectionTitleTextStyle,
                                   textAlign: TextAlign.center,
                                 ),
@@ -67,7 +67,7 @@ class _DeviseScreenState extends State<DeviseScreen> {
                                     onPressed: () {
                                       context
                                           .read<DeviseBloc>()
-                                          .add(DeleteDevise(e.id));
+                                          .add(DeleteDevise(e.id!));
                                     },
                                     icon: const Icon(
                                         Icons.delete_outline_outlined,

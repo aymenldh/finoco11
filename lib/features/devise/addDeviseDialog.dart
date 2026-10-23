@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class AddDeviseDialog extends StatelessWidget {
-  AddDeviseDialog({Key key}) : super(key: key);
+  AddDeviseDialog({Key? key}) : super(key: key);
   final devisesTEC = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
@@ -62,7 +62,7 @@ class AddDeviseDialog extends StatelessWidget {
                 CustomTextField(
                   controller: devisesTEC,
                   validator: (v) {
-                    if (v.isEmpty) {
+                    if (v!.isEmpty) {
                       return 'required';
                     }
                     return null;
@@ -83,7 +83,7 @@ class AddDeviseDialog extends StatelessWidget {
                     ButtonRaised(
                       title: 'Enregistrer',
                       onPressed: () {
-                        if (formKey.currentState.validate()) {
+                        if (formKey.currentState!.validate()) {
                           context
                               .read<DeviseBloc>()
                               .add(AddDevise(Devise(nom: devisesTEC.text)));

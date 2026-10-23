@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 class DossiersScreen extends StatefulWidget {
   final Client client;
-  const DossiersScreen(this.client, {Key key}) : super(key: key);
+  const DossiersScreen(this.client, {Key? key}) : super(key: key);
 
   @override
   State<DossiersScreen> createState() => _DossiersScreenState();
@@ -84,7 +84,7 @@ class _DossiersScreenState extends State<DossiersScreen> {
                 Icons.add_circle,
               ),
               onPressed: () {
-                clientNavigatorKey.currentState.push(MaterialPageRoute(
+                clientNavigatorKey.currentState!.push(MaterialPageRoute(
                   builder: (context) => AddDossierScreen(
                     client: widget.client,
                   ),

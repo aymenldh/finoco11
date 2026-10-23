@@ -3,22 +3,22 @@ import 'package:finoco/config/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class ScaffoldHeader extends StatefulWidget {
-  final String title;
-  final Widget child;
-  final Key scaffoldKey;
+  final String? title;
+  final Widget? child;
+  final Key? scaffoldKey;
   final bool showBackButton;
-  final Function customBackButtonCallBack;
-  final Widget navBarButton;
-  final Widget bottomNavbar;
-  final Widget bottomAppbar;
-  final Widget titleLineWidget;
-  final int screen;
-  final Color backgroundColor;
-  final int index;
-  final bool isNotLogged;
+  final VoidCallback? customBackButtonCallBack;
+  final Widget? navBarButton;
+  final Widget? bottomNavbar;
+  final Widget? bottomAppbar;
+  final Widget? titleLineWidget;
+  final int? screen;
+  final Color? backgroundColor;
+  final int? index;
+  final bool? isNotLogged;
 
   const ScaffoldHeader({
-    Key key,
+    Key? key,
     this.index,
     this.title,
     this.child,
@@ -39,7 +39,7 @@ class ScaffoldHeader extends StatefulWidget {
 }
 
 class _ScaffoldHeaderState extends State<ScaffoldHeader> {
-  static int _selectedIndex;
+  static int? _selectedIndex;
 
   @override
   void initState() {
@@ -113,12 +113,12 @@ class _ScaffoldHeaderState extends State<ScaffoldHeader> {
                             ? 10.0
                             : 0),
                         child: SelectableText(
-                          widget.title,
+                          widget.title!,
                           style: AppThemes.appBarTitleTextStyle,
                         ),
                       ),
                     ),
-                    if (widget.titleLineWidget != null) widget.titleLineWidget,
+                    if (widget.titleLineWidget != null) widget.titleLineWidget!,
                   ],
                 ),
                 if (widget.bottomAppbar != null)
@@ -129,7 +129,7 @@ class _ScaffoldHeaderState extends State<ScaffoldHeader> {
               ],
             ),
           ),
-          Expanded(child: widget.child),
+          Expanded(child: widget.child!),
         ],
       ),
       bottomNavigationBar: widget.bottomNavbar != null

@@ -15,7 +15,7 @@ class ClientWidget extends StatefulWidget {
   final Client client;
   const ClientWidget(
     this.client, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -61,7 +61,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                     onSelected: (String value) {
                       // Handle menu item selection
                       if (value == 'Modifier') {
-                        clientNavigatorKey.currentState.push(MaterialPageRoute(
+                        clientNavigatorKey.currentState!.push(MaterialPageRoute(
                           builder: (context) =>
                               AddClientScreen(client: widget.client),
                         ));
@@ -150,12 +150,12 @@ class _ClientWidgetState extends State<ClientWidget> {
           ),
           FutureBuilder<double>(
             future:
-                DatabaseHelper.instance.getTotalTNDByClient(widget.client.id),
+                DatabaseHelper.instance.getTotalTNDByClient(widget.client.id!),
             builder: (context, snap) {
               if (!snap.hasData) return const SizedBox();
               return Text(
-                snap.data.toStringAsFixed(0) + ' TND',
-                style: snap.data.isNegative
+                snap.data!.toStringAsFixed(0) + ' TND',
+                style: snap.data!.isNegative
                     ? AppThemes.monnaieTextStyle.copyWith(color: Colors.red)
                     : AppThemes.monnaieTextStyle.copyWith(
                         color: Colors.grey[600],

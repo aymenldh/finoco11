@@ -20,9 +20,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class AddDossierScreen extends StatefulWidget {
-  final Dossier dossier;
-  final Client client;
-  const AddDossierScreen({Key key, this.dossier, this.client})
+  final Dossier? dossier;
+  final Client? client;
+  const AddDossierScreen({Key? key, this.dossier, this.client})
       : super(key: key);
 
   @override
@@ -32,9 +32,9 @@ class AddDossierScreen extends StatefulWidget {
 class _AddDossierScreenState extends State<AddDossierScreen> {
   final titleController = TextEditingController();
 
-  Dossier dossier;
+  Dossier? dossier;
   final _formKey = GlobalKey<FormState>();
-  String _selectedDevise;
+  String? _selectedDevise;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -45,13 +45,13 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
     super.initState();
     context.read<DeviseBloc>().add(LoadDevises());
     if (widget.dossier != null) {
-      dossier = widget.dossier.copyWith();
+      dossier = widget.dossier!.copyWith();
     } else {
       dossier = Dossier();
     }
 
-    titleController.text = dossier.name ?? '';
-    _selectedDevise = dossier.devise;
+    titleController.text = dossier!.name ?? '';
+    _selectedDevise = dossier!.devise;
   }
 
   @override
@@ -81,7 +81,7 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
             maskType: EasyLoadingMaskType.black,
           );
         } else if (state is DossiersLoaded) {
-          synchroNavigatorKey.currentContext
+          synchroNavigatorKey.currentContext!
               .read<SyncBloc>()
               .add(LoadDatabaseStats());
           Navigator.pop(context);
@@ -118,7 +118,7 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
                           ),
                           CustomTextField(
                             controller: titleController,
-                            initalValue: dossier.name ?? '',
+                            initalValue: dossier!.name ?? '',
                             labelText: 'Titre',
                             validator: (v) {
                               if (v == null || v.isEmpty) {
@@ -128,7 +128,7 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
                             },
                             onChanged: (value) {
                               setState(() {
-                                dossier.name = value;
+                                dossier!.name = value;
                               });
                             },
                           ),
@@ -142,7 +142,7 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
                                 child: CircularProgressIndicator(),
                               );
                             } else if (snap is DevisesLoaded) {
-                              return DropdownButtonFormField2(
+                              return DropdownButtonFormField2<String>(
                                 scrollbarAlwaysShow: false,
                                 value: _selectedDevise,
                                 style: AppThemes.bodyGreyTextStyle.copyWith(
@@ -202,12 +202,12 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
                                 items: snap.devises
                                     .map((item) => DropdownMenuItem<String>(
                                           value: item.nom,
-                                          child: Text(item.nom),
+                                          child: Text(item.nom!),
                                         ))
                                     .toList(),
                                 onChanged: (value) {
                                   setState(() {
-                                    dossier.devise = value;
+                                    dossier!.devise = value;
                                     _selectedDevise = value;
                                   });
                                 },
@@ -232,17 +232,17 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
                   ButtonRaised(
                     title: 'Enregistrer',
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         if (widget.dossier != null) {
                           context
                               .read<DossierBloc>()
-                              .add(UpdateDossier(dossier));
+                              .add(UpdateDossier(dossier!));
                         } else {
-                          dossier.createdAt = DateTime.now();
-                          dossier.archiver = false;
-                          dossier.idClient = widget.client.id;
-                          dossier.statusFolder = true;
-                          context.read<DossierBloc>().add(AddDossier(dossier));
+                          dossier!.createdAt = DateTime.now();
+                          dossier!.archiver = false;
+                          dossier!.idClient = widget.client!.id;
+                          dossier!.statusFolder = true;
+                          context.read<DossierBloc>().add(AddDossier(dossier!));
                         }
                       }
                     },

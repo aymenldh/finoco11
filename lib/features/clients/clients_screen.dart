@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClientsScreen extends StatefulWidget {
-  const ClientsScreen({Key key}) : super(key: key);
+  const ClientsScreen({Key? key}) : super(key: key);
 
   @override
   State<ClientsScreen> createState() => _ClientsScreenState();
@@ -50,7 +50,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
               Icons.add_circle,
             ),
             onPressed: () {
-              clientNavigatorKey.currentState.push(MaterialPageRoute(
+              clientNavigatorKey.currentState!.push(MaterialPageRoute(
                 builder: (context) => const AddClientScreen(),
               ));
             },
@@ -74,7 +74,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
             onChanged: (v) {
               context.read<ClientBloc>().add(LoadClients(v));
             },
-            suffix: _isTextFieldFocused || searchTEC.text.isNotEmpty
+            suffix: _isTextFieldFocused! || searchTEC.text.isNotEmpty
                 ? Icons.close
                 : null,
             onPressed: () {
@@ -109,7 +109,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
                 padding: EdgeInsets.zero,
                 children: state.client
                     .map((client) => InkWell(
-                        onTap: () => clientNavigatorKey.currentState
+                        onTap: () => clientNavigatorKey.currentState!
                                 .push(MaterialPageRoute(
                               builder: (context) => DossiersScreen(client),
                             )),

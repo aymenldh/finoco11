@@ -31,49 +31,49 @@ class DossierBloc extends Bloc<DossierEvent, DossierState> {
       emit(DossiersLoading());
       await DatabaseHelper.instance.insertDossier(event.dossier.toJson());
       _dossiers = await DatabaseHelper.instance
-          .getDossiersByClientAndStatus(event.dossier.idClient, true);
+          .getDossiersByClientAndStatus(event.dossier.idClient!, true);
       emit(DossiersLoaded(List.from(_dossiers)));
     });
 
     on<UpdateDossier>((event, emit) async {
       emit(DossiersLoading());
       await DatabaseHelper.instance
-          .updateDossier(event.dossier.id, event.dossier.toJson());
+          .updateDossier(event.dossier.id!, event.dossier.toJson());
       _dossiers = await DatabaseHelper.instance
-          .getDossiersByClientAndStatus(event.dossier.idClient, true);
+          .getDossiersByClientAndStatus(event.dossier.idClient!, true);
       emit(DossiersLoaded(List.from(_dossiers)));
     });
 
     on<DeleteDossier>((event, emit) async {
       emit(DossiersLoading());
       final iterations = await DatabaseHelper.instance
-          .listIterationsByDossier(event.dossier.id);
+          .listIterationsByDossier(event.dossier.id!);
       for (var iteration in iterations) {
-        await DatabaseHelper.instance.deleteIteration(iteration.id);
+        await DatabaseHelper.instance.deleteIteration(iteration.id!);
         var attachements = await DatabaseHelper.instance
-            .getAttachmentsByIdIteration(iteration.id);
+            .getAttachmentsByIdIteration(iteration.id!);
         for (var attachement in attachements) {
           final ref =
               FirebaseStorage.instance.ref('uploads/${attachement.distName}');
           await ref.delete();
-          await DatabaseHelper.instance.deleteAttachment(attachement.id);
+          await DatabaseHelper.instance.deleteAttachment(attachement.id!);
         }
       }
-      await DatabaseHelper.instance.deleteDossier(event.dossier.id);
-      synchroNavigatorKey.currentContext
+      await DatabaseHelper.instance.deleteDossier(event.dossier.id!);
+      synchroNavigatorKey.currentContext!
           .read<SyncBloc>()
           .add(LoadDatabaseStats());
       _dossiers = await DatabaseHelper.instance
-          .getDossiersByClientAndStatus(event.dossier.idClient, true);
+          .getDossiersByClientAndStatus(event.dossier.idClient!, true);
       emit(DossiersLoaded(List.from(_dossiers)));
     });
 
     on<OuvrirDossier>((event, emit) async {
       emit(DossiersLoading());
       await DatabaseHelper.instance
-          .updateDossier(event.dossier.id, event.dossier.toJson());
+          .updateDossier(event.dossier.id!, event.dossier.toJson());
       _dossiers = await DatabaseHelper.instance
-          .getDossiersByClientAndStatus(event.dossier.idClient, false);
+          .getDossiersByClientAndStatus(event.dossier.idClient!, false);
       emit(DossiersLoaded(List.from(_dossiers)));
     });
   }

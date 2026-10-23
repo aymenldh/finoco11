@@ -1,8 +1,8 @@
 class TablesStats {
-  int clients;
-  int dossiers;
-  int services;
-  int paiements;
+  int? clients;
+  int? dossiers;
+  int? services;
+  int? paiements;
 
   TablesStats({
     this.dossiers,

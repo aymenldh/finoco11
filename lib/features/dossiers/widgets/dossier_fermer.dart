@@ -10,19 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DossierFermer extends StatelessWidget {
-  final Client client;
-  const DossierFermer({Key key, this.client}) : super(key: key);
+  final Client? client;
+  const DossierFermer({Key? key, this.client}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    context.read<DossierBloc>().add(LoadDossiers(false, client.id));
+    context.read<DossierBloc>().add(LoadDossiers(false, client!.id!));
     return BlocBuilder<DossierBloc, DossierState>(builder: (context, state) {
       if (state is DossiersLoaded) {
         return Stack(
           children: [
             RefreshIndicator(
               onRefresh: () {
-                context.read<DossierBloc>().add(LoadDossiers(false, client.id));
+                context.read<DossierBloc>().add(LoadDossiers(false, client!.id!));
                 return Future.delayed(const Duration(milliseconds: 100));
               },
               child: ListView(
@@ -30,7 +30,7 @@ class DossierFermer extends StatelessWidget {
                 children: state.dossiers
                     .map(
                       (dossier) => InkWell(
-                        onTap: () => clientNavigatorKey.currentState.push(
+                        onTap: () => clientNavigatorKey.currentState!.push(
                           MaterialPageRoute(
                             builder: (context) => DossierDetails(
                               dossier: dossier,
@@ -49,7 +49,7 @@ class DossierFermer extends StatelessWidget {
             Positioned(
               bottom: 0,
               child: ClientTotaleWidget(
-                idClient: client.id,
+                idClient: client!.id!,
               ),
             ),
           ],

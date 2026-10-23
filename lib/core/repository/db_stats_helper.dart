@@ -7,16 +7,16 @@ import 'package:sqflite/sqflite.dart';
 
 class DownloadedDatabaseHelper {
   static final DownloadedDatabaseHelper instance = DownloadedDatabaseHelper._();
-  static Database _database;
+  static Database? _database;
   static const _databaseName = "downloaded_database.db";
   static const _firebaseFilePath = "databases/downloaded_database.db";
 
   DownloadedDatabaseHelper._();
 
   Future<Database> get database async {
-    if (_database != null) return _database;
+    if (_database != null) return _database!;
     _database = await _initDatabase();
-    return _database;
+    return _database!;
   }
 
   DownloadedDatabaseHelper._privateConstructor();
@@ -134,10 +134,10 @@ class DownloadedDatabaseHelper {
 
   Future<void> setFileToDatabase(File file) async {
     try {
-      NEW_DB_VERSION = await _database.getVersion() + 1;
+      NEW_DB_VERSION = await _database!.getVersion() + 1;
 
-      if (_database != null && _database.isOpen) {
-        await _database.close();
+      if (_database != null && _database!.isOpen) {
+        await _database!.close();
         print('Existing database closed.');
         _database = null;
       }

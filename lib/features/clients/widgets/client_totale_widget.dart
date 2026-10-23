@@ -4,9 +4,9 @@ import 'package:finoco/core/repository/dbhelper.dart';
 import 'package:flutter/material.dart';
 
 class ClientTotaleWidget extends StatelessWidget {
-  final int idClient;
+  final int? idClient;
   const ClientTotaleWidget({
-    Key key,
+    Key? key,
     this.idClient,
   }) : super(key: key);
 
@@ -90,7 +90,7 @@ class ClientTotaleWidget extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       color: Colors.white,
       child: FutureBuilder<Statistiques>(
-        future: DatabaseHelper.instance.getStatsByClient(idClient),
+        future: DatabaseHelper.instance.getStatsByClient(idClient!),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const SizedBox.shrink();
           return Column(
@@ -102,8 +102,8 @@ class ClientTotaleWidget extends StatelessWidget {
                     const SelectableText('Totale client :',
                         style: AppThemes.titleTextStyle),
                     SelectableText(
-                      snapshot.data.somme.toStringAsFixed(0) + ' TND',
-                      style: snapshot.data.somme.isNegative
+                      snapshot.data!.somme.toStringAsFixed(0) + ' TND',
+                      style: snapshot.data!.somme.isNegative
                           ? AppThemes.monnaieTextStyle
                               .copyWith(color: Colors.red)
                           : AppThemes.monnaieTextStyle,
@@ -119,7 +119,7 @@ class ClientTotaleWidget extends StatelessWidget {
                       Wrap(
                           direction: Axis.horizontal,
                           spacing: 30,
-                          children: snapshot.data.montantDevises
+                          children: snapshot.data!.montantDevises
                               .map(
                                 (e) => SelectableText(
                                     e.montant.toStringAsFixed(0) +

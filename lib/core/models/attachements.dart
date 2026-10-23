@@ -1,10 +1,10 @@
 class Attachements {
-  int id;
-  int idIteration;
-  String url;
-  String type;
-  String name;
-  String distName;
+  int? id;
+  int? idIteration;
+  String? url;
+  String? type;
+  String? name;
+  String? distName;
   Attachements({
     this.id,
     this.url,
@@ -37,12 +37,12 @@ class Attachements {
   }
 
   Attachements copyWith({
-    String url,
-    String type,
-    String name,
-    int id,
-    int idIteration,
-    String distName,
+    String? url,
+    String? type,
+    String? name,
+    int? id,
+    int? idIteration,
+    String? distName,
   }) {
     return Attachements(
       url: url ?? this.url,

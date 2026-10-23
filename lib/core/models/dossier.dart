@@ -1,11 +1,11 @@
 class Dossier {
-  int id;
-  int idClient;
-  String name;
-  bool statusFolder;
-  String devise;
-  bool archiver;
-  DateTime createdAt;
+  int? id;
+  int? idClient;
+  String? name;
+  bool? statusFolder;
+  String? devise;
+  bool? archiver;
+  DateTime? createdAt;
 
   Dossier({
     this.id,
@@ -23,9 +23,9 @@ class Dossier {
       'idClient': idClient,
       'name': name,
       'devise': devise,
-      'statusFolder': statusFolder ? 1 : 0,
-      'archiver': archiver ? 1 : 0,
-      'createdAt': createdAt.toIso8601String(),
+      'statusFolder': statusFolder! ? 1 : 0,
+      'archiver': archiver! ? 1 : 0,
+      'createdAt': createdAt!.toIso8601String(),
     };
   }
 
@@ -42,13 +42,13 @@ class Dossier {
   }
 
   Dossier copyWith({
-    int id,
-    int idClient,
-    String name,
-    bool statusFolder,
-    bool archiver,
-    DateTime createdAt,
-    String devise,
+    int? id,
+    int? idClient,
+    String? name,
+    bool? statusFolder,
+    bool? archiver,
+    DateTime? createdAt,
+    String? devise,
   }) {
     return Dossier(
       id: id ?? this.id,

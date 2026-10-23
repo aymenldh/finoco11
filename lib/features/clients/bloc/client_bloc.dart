@@ -42,7 +42,7 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
       _clients = await DatabaseHelper.instance.getClientsByArchiver(false);
       _clients.sort((a, b) =>
           a.fullName.toLowerCase().compareTo(b.fullName.toLowerCase()));
-      synchroNavigatorKey.currentContext
+      synchroNavigatorKey.currentContext!
           .read<SyncBloc>()
           .add(LoadDatabaseStats());
       emit(ClientsLoaded(List.from(_clients)));
@@ -51,41 +51,41 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
     on<UpdateClient>((event, emit) async {
       emit(ClientsLoading());
       await DatabaseHelper.instance
-          .updateClient(event.client.id, event.client.toJson());
+          .updateClient(event.client.id!, event.client.toJson());
       _clients = await DatabaseHelper.instance.getClientsByArchiver(false);
       _clients.sort((a, b) =>
           a.fullName.toLowerCase().compareTo(b.fullName.toLowerCase()));
-      synchroNavigatorKey.currentContext
+      synchroNavigatorKey.currentContext!
           .read<SyncBloc>()
           .add(LoadDatabaseStats());
       emit(ClientsLoaded(List.from(_clients)));
     });
     on<DeleteClient>((event, emit) async {
       emit(ClientsLoading());
-      await DatabaseHelper.instance.deleteDossier(event.client.id);
+      await DatabaseHelper.instance.deleteDossier(event.client.id!);
 
       final dossiers =
-          await DatabaseHelper.instance.getDossiersByClient(event.client.id);
+          await DatabaseHelper.instance.getDossiersByClient(event.client.id!);
 
       for (var dossier in dossiers) {
-        await DatabaseHelper.instance.deleteIteration(dossier.id);
+        await DatabaseHelper.instance.deleteIteration(dossier.id!);
         final iterations =
-            await DatabaseHelper.instance.listIterationsByDossier(dossier.id);
+            await DatabaseHelper.instance.listIterationsByDossier(dossier.id!);
         for (var iteration in iterations) {
-          await DatabaseHelper.instance.deleteIteration(iteration.id);
+          await DatabaseHelper.instance.deleteIteration(iteration.id!);
           var attachements = await DatabaseHelper.instance
-              .getAttachmentsByIdIteration(iteration.id);
+              .getAttachmentsByIdIteration(iteration.id!);
           for (var attachement in attachements) {
             final ref =
                 FirebaseStorage.instance.ref('uploads/${attachement.distName}');
             await ref.delete();
-            await DatabaseHelper.instance.deleteAttachment(attachement.id);
+            await DatabaseHelper.instance.deleteAttachment(attachement.id!);
           }
         }
       }
 
-      await DatabaseHelper.instance.deleteClient(event.client.id);
-      synchroNavigatorKey.currentContext
+      await DatabaseHelper.instance.deleteClient(event.client.id!);
+      synchroNavigatorKey.currentContext!
           .read<SyncBloc>()
           .add(LoadDatabaseStats());
 

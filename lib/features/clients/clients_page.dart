@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClientsPage extends StatefulWidget {
-  const ClientsPage({Key key}) : super(key: key);
+  const ClientsPage({Key? key}) : super(key: key);
 
   @override
   State<ClientsPage> createState() => _ClientsPageState();

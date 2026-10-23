@@ -13,8 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../dossiers/widgets/dossier_totale_widget.dart';
 
 class PaiementsScreen extends StatefulWidget {
-  final Dossier dossier;
-  const PaiementsScreen({Key key, this.dossier}) : super(key: key);
+  final Dossier? dossier;
+  const PaiementsScreen({Key? key, this.dossier}) : super(key: key);
 
   @override
   State<PaiementsScreen> createState() => _PaiementsScreenState();
@@ -25,7 +25,7 @@ class _PaiementsScreenState extends State<PaiementsScreen> {
   Widget build(BuildContext context) {
     context
         .read<IterationBloc>()
-        .add(LoadIterations(TypeTransaction.PAIEMENT.name, widget.dossier.id));
+        .add(LoadIterations(TypeTransaction.PAIEMENT.name, widget.dossier!.id!));
 
     return Stack(
       children: [
@@ -44,7 +44,7 @@ class _PaiementsScreenState extends State<PaiementsScreen> {
               children: state.iterations
                   .map(
                     (item) => InkWell(
-                      onTap: () => clientNavigatorKey.currentState
+                      onTap: () => clientNavigatorKey.currentState!
                           .push(MaterialPageRoute(
                         builder: (context) => IterationDetails(
                           iteration: item,

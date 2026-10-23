@@ -24,12 +24,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class TransferButtomSheet extends StatefulWidget {
-  final int idIteration;
-  final TypeTransaction typeTransaction;
-  final int idDossier;
-  final int idClient;
+  final int? idIteration;
+  final TypeTransaction? typeTransaction;
+  final int? idDossier;
+  final int? idClient;
   const TransferButtomSheet(
-      {Key key,
+      {Key? key,
       this.idIteration,
       this.typeTransaction,
       this.idDossier,
@@ -45,10 +45,10 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
   ClientBloc clientBloc = ClientBloc();
   DossierBloc dossierBloc = DossierBloc();
   IterationBloc iterationBloc = IterationBloc();
-  Client selectedOption;
-  Dossier _selectedDossier;
+  Client? selectedOption;
+  Dossier? _selectedDossier;
   int currentScreen = 0;
-  TypeTransaction _selectedComponent;
+  TypeTransaction? _selectedComponent;
   FocusNode myFocusNode = FocusNode();
 
   bool _isTextFieldFocused = false;
@@ -103,17 +103,17 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
               maskType: EasyLoadingMaskType.black,
             );
           } else if (state is IterationsLoaded) {
-            clientNavigatorKey.currentContext
+            clientNavigatorKey.currentContext!
                 .read<ClientBloc>()
                 .add(LoadClients(''));
-            clientNavigatorKey.currentContext
+            clientNavigatorKey.currentContext!
                 .read<DossierBloc>()
-                .add(LoadDossiers(true, widget.idClient));
-            accueilNavigatorKey.currentContext
+                .add(LoadDossiers(true, widget.idClient!));
+            accueilNavigatorKey.currentContext!
                 .read<StatsBloc>()
                 .add(LoadStats());
-            clientNavigatorKey.currentContext.read<IterationBloc>().add(
-                LoadIterations(widget.typeTransaction.name, widget.idDossier));
+            clientNavigatorKey.currentContext!.read<IterationBloc>().add(
+                LoadIterations(widget.typeTransaction!.name, widget.idDossier!));
 
             Navigator.pop(context);
           }
@@ -163,7 +163,7 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
             onChanged: (v) {
               clientBloc.add(SearchForTransfert(v));
             },
-            suffix: _isTextFieldFocused || searchTEC.text.isNotEmpty
+            suffix: _isTextFieldFocused! || searchTEC.text.isNotEmpty
                 ? Icons.close
                 : null,
             onPressed: () {
@@ -191,7 +191,7 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
                           setState(() {
                             selectedOption = e;
                             dossierBloc.add(
-                                LoadDossierForTransfert(selectedOption.id));
+                                LoadDossierForTransfert(selectedOption!.id!));
                           });
                         },
                         title: Text(e.fullName),
@@ -202,7 +202,7 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
                             setState(() {
                               selectedOption = value;
                               dossierBloc.add(
-                                  LoadDossierForTransfert(selectedOption.id));
+                                  LoadDossierForTransfert(selectedOption!.id!));
                             });
                           },
                         ),
@@ -247,7 +247,7 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
           bloc: dossierBloc,
           builder: (context, state) {
             if (state is DossiersLoaded) {
-              return DropdownButtonFormField2(
+              return DropdownButtonFormField2<Dossier>(
                 scrollbarAlwaysShow: false,
                 value: _selectedDossier,
                 style: AppThemes.bodyGreyTextStyle
@@ -302,7 +302,7 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
                     .map((item) => DropdownMenuItem<Dossier>(
                           value: item,
                           child: Text(
-                            item.name,
+                            item.name!,
                           ),
                         ))
                     .toList(),
@@ -313,7 +313,7 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
                 },
                 icon: const Icon(Icons.keyboard_arrow_down),
                 validator: (p0) {
-                  if (p0 == null || p0.isEmpty) {
+                  if (p0 == null) {
                     return 'requiredField';
                   }
                   return null;
@@ -332,7 +332,7 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
         const SizedBox(
           height: 25,
         ),
-        DropdownButtonFormField2(
+        DropdownButtonFormField2<TypeTransaction>(
           scrollbarAlwaysShow: false,
           value: _selectedComponent,
           style: AppThemes.bodyGreyTextStyle
@@ -431,8 +431,8 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
               enabled: selectedOption != null && _selectedDossier != null,
               title: 'Transférer',
               onPressed: () {
-                iterationBloc.add(TransfereIteration(widget.idIteration,
-                    _selectedDossier.id, _selectedComponent));
+                iterationBloc.add(TransfereIteration(widget.idIteration!,
+                    _selectedDossier!.id!, _selectedComponent!));
               },
             ),
           ],

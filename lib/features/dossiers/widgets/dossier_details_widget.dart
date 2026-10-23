@@ -6,8 +6,8 @@ import 'package:finoco/core/repository/dbhelper.dart';
 import 'package:flutter/material.dart';
 
 class DossierDetailsWidget extends StatefulWidget {
-  final Dossier dossier;
-  const DossierDetailsWidget({Key key, this.dossier}) : super(key: key);
+  final Dossier? dossier;
+  const DossierDetailsWidget({Key? key, this.dossier}) : super(key: key);
 
   @override
   State<DossierDetailsWidget> createState() => _DossierDetailsWidgetState();
@@ -30,7 +30,7 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.dossier.name,
+                  widget.dossier!.name!,
                   style: AppThemes.sectionTitleTextStyle,
                 ),
                 IconButton(
@@ -41,24 +41,24 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
             ),
             _buildRowTitleAndText(
               'Date création',
-              widget.dossier.createdAt.toIso8601String().substring(0, 10),
+              widget.dossier!.createdAt!.toIso8601String().substring(0, 10),
             ),
             _buildRowTitleAndText(
               'Devise',
-              widget.dossier.devise,
+              widget.dossier!.devise!,
             ),
             const SizedBox(
               height: 20,
             ),
             FutureBuilder<Statistiques>(
               future:
-                  DatabaseHelper.instance.getDossierStats(widget.dossier.id),
+                  DatabaseHelper.instance.getDossierStats(widget.dossier!.id!),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) return const SizedBox();
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (widget.dossier.devise != 'TND') ...[
+                    if (widget.dossier!.devise != 'TND') ...[
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 25, vertical: 10),
@@ -83,7 +83,7 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
                                   style: AppThemes.titleTextStyle,
                                 ),
                                 Text(
-                                  widget.dossier.devise,
+                                  widget.dossier!.devise!,
                                   style: AppThemes.monnaieTextStyle,
                                 ),
                               ],
@@ -97,7 +97,7 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
                                   style: AppThemes.kbirShwyTextStyle,
                                 ),
                                 Text(
-                                  snapshot.data.totaleServices30
+                                  snapshot.data!.totaleServices30
                                       .toStringAsFixed(0),
                                   style: AppThemes.monnaieTextStyle
                                       .copyWith(color: Colors.black),
@@ -113,7 +113,7 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
                                   style: AppThemes.kbirShwyTextStyle,
                                 ),
                                 Text(
-                                  snapshot.data.totalePaiements30
+                                  snapshot.data!.totalePaiements30
                                       .toStringAsFixed(0),
                                   style: AppThemes.monnaieTextStyle
                                       .copyWith(color: Colors.red),
@@ -129,9 +129,9 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
                                   style: AppThemes.kbirShwyTextStyle,
                                 ),
                                 Text(
-                                    snapshot.data.sommeDevise
+                                    snapshot.data!.sommeDevise
                                         .toStringAsFixed(0),
-                                    style: snapshot.data.sommeDevise.isNegative
+                                    style: snapshot.data!.sommeDevise.isNegative
                                         ? AppThemes.monnaieTextStyle
                                             .copyWith(color: Colors.red)
                                         : AppThemes.monnaieTextStyle
@@ -183,7 +183,7 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
                                 style: AppThemes.kbirShwyTextStyle,
                               ),
                               Text(
-                                snapshot.data.totaleServices.toStringAsFixed(0),
+                                snapshot.data!.totaleServices.toStringAsFixed(0),
                                 style: AppThemes.monnaieTextStyle.copyWith(
                                   color: Colors.black,
                                 ),
@@ -199,7 +199,7 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
                                 style: AppThemes.kbirShwyTextStyle,
                               ),
                               Text(
-                                snapshot.data.totalePaiements
+                                snapshot.data!.totalePaiements
                                     .toStringAsFixed(0),
                                 style: AppThemes.monnaieTextStyle
                                     .copyWith(color: Colors.red),
@@ -215,11 +215,11 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
                                 style: AppThemes.kbirShwyTextStyle,
                               ),
                               Text(
-                                  (snapshot.data.totaleServices -
-                                          snapshot.data.totalePaiements)
+                                  (snapshot.data!.totaleServices -
+                                          snapshot.data!.totalePaiements)
                                       .toStringAsFixed(0),
-                                  style: (snapshot.data.totaleServices -
-                                              snapshot.data.totalePaiements)
+                                  style: (snapshot.data!.totaleServices -
+                                              snapshot.data!.totalePaiements)
                                           .isNegative
                                       ? AppThemes.monnaieTextStyle
                                           .copyWith(color: Colors.red)

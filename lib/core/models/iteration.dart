@@ -1,18 +1,18 @@
 import 'package:finoco/core/models/type_transaction.dart';
 
 class Iteration {
-  int id;
-  int idFolder;
-  int idClient;
-  String name;
-  double amountTND;
-  double amountDevise;
-  double taux;
-  String devise;
-  String description;
-  DateTime createdAt;
-  TypeTransaction type; // 'payment' or 'service'
-  String operation;
+  int? id;
+  int? idFolder;
+  int? idClient;
+  String? name;
+  double? amountTND;
+  double? amountDevise;
+  double? taux;
+  String? devise;
+  String? description;
+  DateTime? createdAt;
+  TypeTransaction? type; // 'payment' or 'service'
+  String? operation;
 
   Iteration({
     this.id,
@@ -40,8 +40,8 @@ class Iteration {
       'taux': taux,
       'devise': devise,
       'description': description,
-      'createdAt': createdAt.toIso8601String(),
-      'type': type.name,
+      'createdAt': createdAt!.toIso8601String(),
+      'type': type!.name,
       'operation': operation,
     };
   }
@@ -65,18 +65,18 @@ class Iteration {
   }
 
   Iteration copyWith({
-    int id,
-    int idFolder,
-    int idClient,
-    String name,
-    double amountTND,
-    double amountDevise,
-    double taux,
-    String devise,
-    String description,
-    DateTime createdAt,
-    TypeTransaction type,
-    String operation,
+    int? id,
+    int? idFolder,
+    int? idClient,
+    String? name,
+    double? amountTND,
+    double? amountDevise,
+    double? taux,
+    String? devise,
+    String? description,
+    DateTime? createdAt,
+    TypeTransaction? type,
+    String? operation,
   }) {
     return Iteration(
       id: id ?? this.id,

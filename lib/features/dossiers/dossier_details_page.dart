@@ -16,8 +16,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class DossierDetails extends StatefulWidget {
-  final Dossier dossier;
-  const DossierDetails({Key key, this.dossier}) : super(key: key);
+  final Dossier? dossier;
+  const DossierDetails({Key? key, this.dossier}) : super(key: key);
 
   @override
   State<DossierDetails> createState() => _DossierDetailsState();
@@ -63,10 +63,10 @@ class _DossierDetailsState extends State<DossierDetails> {
             maskType: EasyLoadingMaskType.black,
           );
         } else if (state is ExportsLoaded) {
-          clientNavigatorKey.currentState.push(MaterialPageRoute(
+          clientNavigatorKey.currentState!.push(MaterialPageRoute(
             builder: (context) => PDFViewerPage(
               pdf: state.file,
-              name: widget.dossier.name + '.pdf',
+              name: widget.dossier!.name! + '.pdf',
             ),
           ));
         }
@@ -74,7 +74,7 @@ class _DossierDetailsState extends State<DossierDetails> {
       child: DefaultTabController(
         length: 2,
         child: ScaffoldHeader(
-          title: widget.dossier.name,
+          title: widget.dossier!.name!,
           showBackButton: true,
           titleLineWidget: Row(
             children: [
@@ -82,10 +82,10 @@ class _DossierDetailsState extends State<DossierDetails> {
                   icon: const Icon(Icons.local_print_shop_outlined),
                   onPressed: () => context
                       .read<ExportBloc>()
-                      .add(ExportDossier(widget.dossier.id))),
+                      .add(ExportDossier(widget.dossier!.id!))),
               IconButton(
                 icon: const Icon(Icons.add_circle),
-                onPressed: () => clientNavigatorKey.currentState.push(
+                onPressed: () => clientNavigatorKey.currentState!.push(
                   MaterialPageRoute(
                     builder: (context) => AddTransactonScreen(
                       dossier: widget.dossier,

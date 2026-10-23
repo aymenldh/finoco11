@@ -4,49 +4,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CustomSearchField extends StatefulWidget {
-  final String _labelText;
-  final String _hintText;
+  final String? _labelText;
+  final String? _hintText;
   final bool isTextArea;
-  final Function _validator;
+  final String? Function(String?)? _validator;
   final TextEditingController _controller;
-  final TextInputType _keyboardType;
+  final TextInputType? _keyboardType;
   final bool obscureText;
   final bool enabled;
-  final List<TextInputFormatter> _formatter;
-  final Function _tap;
-  final Widget _icon;
-  final String _type;
-  final IconData _suffix;
-  final Function _onPressed;
-  final Color borderColor;
-  final int minlines;
-  final FocusNode focusNode;
-  final int maxlines;
-  final int maxLength;
-  final TextInputAction textInputAction;
-  final List<String> autofillHints;
-  final Function() onEditingComplete;
-  final Function(String value) onChanged;
+  final List<TextInputFormatter>? _formatter;
+  final VoidCallback? _tap;
+  final Widget? _icon;
+  final String? _type;
+  final IconData? _suffix;
+  final VoidCallback? _onPressed;
+  final Color? borderColor;
+  final int? minlines;
+  final FocusNode? focusNode;
+  final int? maxlines;
+  final int? maxLength;
+  final TextInputAction? textInputAction;
+  final List<String>? autofillHints;
+  final VoidCallback? onEditingComplete;
+  final void Function(String value)? onChanged;
   final String initalValue;
 
-  final Color fillColor;
+  final Color? fillColor;
   const CustomSearchField({
-    Key key,
+    Key? key,
     this.isTextArea = false,
-    @required TextEditingController controller,
-    TextInputType keyboardType,
-    List<TextInputFormatter> formatter,
+    required TextEditingController controller,
+    TextInputType? keyboardType,
+    List<TextInputFormatter>? formatter,
     this.textInputAction,
-    Widget icon,
-    IconData suffix,
-    String Function(String) validator,
-    Function onTap,
-    Function onPressed,
+    Widget? icon,
+    IconData? suffix,
+    String? Function(String?)? validator,
+    VoidCallback? onTap,
+    VoidCallback? onPressed,
     this.obscureText = false,
     this.enabled = true,
-    String labelText,
-    String hintText,
-    String type,
+    String? labelText,
+    String? hintText,
+    String? type,
     this.minlines,
     this.maxlines,
     this.maxLength,
@@ -142,7 +142,7 @@ class _CustomTextFieldState extends State<CustomSearchField> {
         labelStyle: TextStyle(
           color: !widget.enabled
               ? AppColor.darkGray
-              : widget.focusNode.hasFocus
+              : (widget.focusNode?.hasFocus ?? false)
                   ? AppColor.appPrimaryColor
                   : AppColor.appSecondaryColor,
         ),
@@ -150,7 +150,7 @@ class _CustomTextFieldState extends State<CustomSearchField> {
             ? IconButton(
                 icon: Icon(
                   widget.obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: widget.focusNode.hasFocus
+                  color: (widget.focusNode?.hasFocus ?? false)
                       ? AppColor.appPrimaryColor
                       : widget._controller.text == widget.initalValue
                           ? AppColor.darkGray
@@ -163,7 +163,7 @@ class _CustomTextFieldState extends State<CustomSearchField> {
                     onPressed: widget._onPressed,
                     icon: Icon(
                       widget._suffix,
-                      color: widget.focusNode.hasFocus
+                      color: (widget.focusNode?.hasFocus ?? false)
                           ? AppColor.appPrimaryColor
                           : widget._controller.text == widget.initalValue
                               ? AppColor.darkGray

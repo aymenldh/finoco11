@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class ClientDetailsWidget extends StatelessWidget {
   const ClientDetailsWidget({
-    Key key,
-    @required this.client,
+    Key? key,
+    required this.client,
   }) : super(key: key);
 
   final Client client;
@@ -45,7 +45,7 @@ class ClientDetailsWidget extends StatelessWidget {
               height: 20,
             ),
             FutureBuilder<Statistiques>(
-              future: DatabaseHelper.instance.getStatsByClient(client.id),
+              future: DatabaseHelper.instance.getStatsByClient(client.id!),
               builder: (context, snap) {
                 if (!snap.hasData) {
                   return const SizedBox();
@@ -90,7 +90,7 @@ class ClientDetailsWidget extends StatelessWidget {
                                 style: AppThemes.kbirShwyTextStyle,
                               ),
                               SelectableText(
-                                snap.data.totaleServices.toStringAsFixed(0),
+                                snap.data!.totaleServices.toStringAsFixed(0),
                                 style: AppThemes.monnaieTextStyle
                                     .copyWith(color: Colors.black),
                               ),
@@ -105,7 +105,7 @@ class ClientDetailsWidget extends StatelessWidget {
                                 style: AppThemes.kbirShwyTextStyle,
                               ),
                               SelectableText(
-                                  snap.data.totalePaiements
+                                  snap.data!.totalePaiements
                                       .toInt()
                                       .toStringAsFixed(0),
                                   style: AppThemes.monnaieTextStyle
@@ -121,11 +121,11 @@ class ClientDetailsWidget extends StatelessWidget {
                                 style: AppThemes.kbirShwyTextStyle,
                               ),
                               SelectableText(
-                                  (snap.data.totaleServices -
-                                          snap.data.totalePaiements)
+                                  (snap.data!.totaleServices -
+                                          snap.data!.totalePaiements)
                                       .toStringAsFixed(0),
-                                  style: (snap.data.totaleServices -
-                                              snap.data.totalePaiements)
+                                  style: (snap.data!.totaleServices -
+                                              snap.data!.totalePaiements)
                                           .isNegative
                                       ? AppThemes.monnaieTextStyle
                                           .copyWith(color: Colors.red)
@@ -165,7 +165,7 @@ class ClientDetailsWidget extends StatelessWidget {
                           Wrap(
                               direction: Axis.horizontal,
                               spacing: 30,
-                              children: snap.data.montantDevises
+                              children: snap.data!.montantDevises
                                   .map(
                                     (e) => SelectableText(
                                         e.montant.toStringAsFixed(0) +

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MoreScreen extends StatefulWidget {
-  const MoreScreen({Key key}) : super(key: key);
+  const MoreScreen({Key? key}) : super(key: key);
 
   @override
   State<MoreScreen> createState() => _MoreScreenState();
@@ -35,7 +35,7 @@ class _MoreScreenState extends State<MoreScreen> {
             color: Color.fromRGBO(166, 179, 197, 1),
           ),
           () async {
-            moreNavigatorKey.currentState.push(MaterialPageRoute(
+            moreNavigatorKey.currentState!.push(MaterialPageRoute(
               builder: (context) => DevisesPage(),
             ));
           },
@@ -105,7 +105,7 @@ class _MoreScreenState extends State<MoreScreen> {
 
   Widget buildItem(
       BuildContext context, String title, Icon icon, VoidCallback press,
-      [Widget suffix]) {
+      [Widget? suffix]) {
     return InkWell(
       child: Container(
         width: MediaQuery.of(context).size.width,

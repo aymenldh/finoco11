@@ -5,7 +5,7 @@ import '../../../config/theme/colors.dart';
 import '../bloc/home_bloc.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({Key key}) : super(key: key);
+  const BottomNavigation({Key? key}) : super(key: key);
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
@@ -48,7 +48,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (state.navButtonList[state.selectedIndex] != null)
-                state.navButtonList[state.selectedIndex],
+                state.navButtonList[state.selectedIndex]!,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -43,9 +43,9 @@ class ApiUrls {
   /// drivers
   static String INVITE_DRIVER() => "/drivers?invite";
   static String DRIVERS_URL() => "/drivers?filter__status[eq]=Active";
-  static String PAGED_DRIVERS_URL(int page, {String fields}) =>
+  static String PAGED_DRIVERS_URL(int page, {String? fields}) =>
       "/drivers?filter__status[eq]=Active&page=$page" + (fields ?? '');
-  static String DRIVER_URL(String id, {String fields}) =>
+  static String DRIVER_URL(String id, {String? fields}) =>
       "/drivers/$id" + (fields ?? '');
 
   /// models

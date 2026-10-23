@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccueilView extends StatefulWidget {
-  const AccueilView({Key key}) : super(key: key);
+  const AccueilView({Key? key}) : super(key: key);
 
   @override
   State<AccueilView> createState() => _AccueilViewState();

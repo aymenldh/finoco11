@@ -2,7 +2,7 @@ import 'package:finoco/core/shared/widgets/button_raised.dart';
 import 'package:flutter/material.dart';
 
 class AddClientButton extends StatefulWidget {
-  const AddClientButton({Key key}) : super(key: key);
+  const AddClientButton({Key? key}) : super(key: key);
 
   @override
   State<AddClientButton> createState() => _AddClientButtonState();
@@ -45,7 +45,7 @@ class _AddClientButtonState extends State<AddClientButton> {
 }
 
 class CreateClientBottomSheet extends StatelessWidget {
-  const CreateClientBottomSheet({Key key}) : super(key: key);
+  const CreateClientBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

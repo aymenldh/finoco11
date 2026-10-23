@@ -16,11 +16,11 @@ class BannerWidget extends StatelessWidget {
   final double spaceBetween;
 
   BannerWidget({
-    Key key,
-    @required BannerModel bannerModel,
+    Key? key,
+    required BannerModel bannerModel,
     this.borderRadius = 5,
     this.spaceBetween = 0,
-    @required VoidCallback onTap,
+    required VoidCallback onTap,
   })  : _bannerModel = bannerModel,
         _onTap = onTap,
         super(key: key);

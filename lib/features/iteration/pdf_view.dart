@@ -8,30 +8,30 @@ import 'package:share_plus/share_plus.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PDFViewerPage extends StatelessWidget {
-  final File pdf;
-  final String name;
-  final String url;
-  final String imageUrl;
-  const PDFViewerPage({Key key, this.pdf, this.name, this.url, this.imageUrl})
+  final File? pdf;
+  final String? name;
+  final String? url;
+  final String? imageUrl;
+  const PDFViewerPage({Key? key, this.pdf, this.name, this.url, this.imageUrl})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ScaffoldHeader(
-      titleLineWidget: pdf == null
+      titleLineWidget: pdf! == null
           ? null
           : IconButton(
               icon: const Icon(Icons.ios_share_outlined),
               onPressed: () {
-                Share.shareFiles([pdf.path], mimeTypes: ['application/pdf']);
+                Share.shareFiles([pdf!.path], mimeTypes: ['application/pdf']);
               }),
       title: name ?? '',
       child: pdf != null
-          ? SfPdfViewer.file(pdf)
+          ? SfPdfViewer.file(pdf!)
           : url != null
-              ? SfPdfViewer.network(url)
+              ? SfPdfViewer.network(url!)
               : imageUrl != null
-                  ? Image.network(imageUrl)
+                  ? Image.network(imageUrl!)
                   : const SizedBox(),
     );
   }

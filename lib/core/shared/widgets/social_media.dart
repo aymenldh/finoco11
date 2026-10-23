@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SocialMediaWidgets extends StatelessWidget {
   const SocialMediaWidgets({
-    Key key,
+    Key? key,
     this.signIn = true,
   }) : super(key: key);
   final bool signIn;

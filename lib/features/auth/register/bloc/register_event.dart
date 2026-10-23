@@ -14,9 +14,9 @@ class Submitted extends RegisterEvent {
   final String password;
 
   const Submitted({
-    @required this.registrationType,
-    @required this.email,
-    @required this.password,
+    required this.registrationType,
+    required this.email,
+    required this.password,
   });
 
   @override

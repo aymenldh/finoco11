@@ -14,7 +14,7 @@ class AuthenticationAuthenticated extends AuthenticationState {}
 class AuthenticationUnauthenticated extends AuthenticationState {}
 
 class AuthenticationNotActivated extends AuthenticationState {
-  final User user;
+  final User? user;
 
   AuthenticationNotActivated({this.user});
 }

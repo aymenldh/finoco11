@@ -11,12 +11,12 @@ class CarouselIndicatorWidget extends StatelessWidget {
   final IndicatorModel sizeIndicator;
 
   const CarouselIndicatorWidget({
-    Key key,
+    Key? key,
     this.active = false,
     this.animation = true,
-    @required this.color,
+    required this.color,
     this.dotBorderRadius = 8.0,
-    @required this.sizeIndicator,
+    required this.sizeIndicator,
   }) : super(key: key);
 
   bool get _doAnimation => active && animation;

@@ -14,8 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class AddClientScreen extends StatefulWidget {
-  final Client client;
-  const AddClientScreen({Key key, this.client}) : super(key: key);
+  final Client? client;
+  const AddClientScreen({Key? key, this.client}) : super(key: key);
 
   @override
   State<AddClientScreen> createState() => _AddClientScreenState();
@@ -32,7 +32,7 @@ class _AddClientScreenState extends State<AddClientScreen> {
   bool isEdited = false;
 
   bool didUpdate = true;
-  Client client;
+  Client? client;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -42,15 +42,15 @@ class _AddClientScreenState extends State<AddClientScreen> {
   void initState() {
     super.initState();
     if (widget.client != null) {
-      client = widget.client.copyWith();
+      client = widget.client!.copyWith();
     } else {
       client = Client();
     }
-    firstNameController.text = client.firstName ?? '';
-    lastNameController.text = client.lastName ?? '';
-    emailController.text = client.email ?? '';
-    addressController.text = client.address ?? '';
-    phoneController.text = client.phone ?? '';
+    firstNameController.text = client!.firstName ?? '';
+    lastNameController.text = client!.lastName ?? '';
+    emailController.text = client!.email ?? '';
+    addressController.text = client!.address ?? '';
+    phoneController.text = client!.phone ?? '';
   }
 
   @override
@@ -80,10 +80,10 @@ class _AddClientScreenState extends State<AddClientScreen> {
             maskType: EasyLoadingMaskType.black,
           );
         } else if (state is ClientsLoaded) {
-          synchroNavigatorKey.currentContext
+          synchroNavigatorKey.currentContext!
               .read<SyncBloc>()
               .add(LoadDatabaseStats());
-          clientNavigatorKey.currentState.pop();
+          clientNavigatorKey.currentState!.pop();
         }
       },
       child: GestureDetector(
@@ -129,16 +129,16 @@ class _AddClientScreenState extends State<AddClientScreen> {
                               children: [
                                 Expanded(
                                   child: CustomTextField(
-                                    initalValue: client.firstName ?? '',
+                                    initalValue: client!.firstName ?? '',
                                     labelText: 'Prénom',
                                     onChanged: (value) {
                                       setState(() {
-                                        client.firstName = value;
+                                        client!.firstName = value;
                                       });
                                     },
                                     controller: firstNameController,
                                     validator: (v) {
-                                      if (v.isEmpty) {
+                                      if (v!.isEmpty) {
                                         return 'Obligatoire';
                                       }
                                       return null;
@@ -152,15 +152,15 @@ class _AddClientScreenState extends State<AddClientScreen> {
                                   child: CustomTextField(
                                     keyboardType: TextInputType.text,
                                     textInputAction: TextInputAction.next,
-                                    initalValue: client.lastName ?? '',
+                                    initalValue: client!.lastName ?? '',
                                     labelText: 'Nom',
                                     onChanged: (value) {
                                       setState(() {
-                                        client.lastName = value;
+                                        client!.lastName = value;
                                       });
                                     },
                                     validator: (v) {
-                                      if (v.isEmpty) {
+                                      if (v!.isEmpty) {
                                         return 'Obligatoire';
                                       }
                                       return null;
@@ -174,12 +174,12 @@ class _AddClientScreenState extends State<AddClientScreen> {
                               height: 20,
                             ),
                             CustomTextField(
-                              initalValue: client.email ?? '',
+                              initalValue: client!.email ?? '',
                               labelText: 'E-mail',
                               keyboardType: TextInputType.emailAddress,
                               onChanged: (value) {
                                 setState(() {});
-                                client.email = value;
+                                client!.email = value;
                               },
                               controller: emailController,
                             ),
@@ -188,11 +188,11 @@ class _AddClientScreenState extends State<AddClientScreen> {
                             ),
                             CustomTextField(
                               controller: addressController,
-                              initalValue: client.address ?? '',
+                              initalValue: client!.address ?? '',
                               labelText: 'Adresse',
                               onChanged: (value) {
                                 setState(() {
-                                  client.address = value;
+                                  client!.address = value;
                                 });
                               },
                             ),
@@ -200,11 +200,11 @@ class _AddClientScreenState extends State<AddClientScreen> {
                               height: 30,
                             ),
                             CustomTextField(
-                              initalValue: client.phone ?? '',
+                              initalValue: client!.phone ?? '',
                               labelText: 'Téléphone',
                               onChanged: (value) {
                                 setState(() {
-                                  client.phone = value;
+                                  client!.phone = value;
                                 });
                               },
                               controller: phoneController,
@@ -213,12 +213,12 @@ class _AddClientScreenState extends State<AddClientScreen> {
                               height: 20,
                             ),
                             CustomTextField(
-                              initalValue: client.notes ?? '',
+                              initalValue: client!.notes ?? '',
                               labelText: 'Remarques',
                               controller: notesController,
                               isTextArea: true,
                               onChanged: (v) {
-                                client.notes = v;
+                                client!.notes = v;
                               },
                               minlines: 5,
                               maxlines: 10,
@@ -231,11 +231,11 @@ class _AddClientScreenState extends State<AddClientScreen> {
                       title: 'Enregistrer',
                       onPressed: () {
                         if (widget.client != null) {
-                          context.read<ClientBloc>().add(UpdateClient(client));
+                          context.read<ClientBloc>().add(UpdateClient(client!));
                         } else {
-                          client.createdAt = DateTime.now();
-                          client.archiver = false;
-                          context.read<ClientBloc>().add(AddClient(client));
+                          client!.createdAt = DateTime.now();
+                          client!.archiver = false;
+                          context.read<ClientBloc>().add(AddClient(client!));
                         }
                       },
                     ),

@@ -33,11 +33,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class AddTransactonScreen extends StatefulWidget {
-  final Iteration iteration;
-  final Dossier dossier;
-  final TypeTransaction typeTransaction;
+  final Iteration? iteration;
+  final Dossier? dossier;
+  final TypeTransaction? typeTransaction;
   const AddTransactonScreen(
-      {Key key, this.iteration, this.dossier, this.typeTransaction})
+      {Key? key, this.iteration, this.dossier, this.typeTransaction})
       : super(key: key);
 
   @override
@@ -52,9 +52,9 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
   final notesController = TextEditingController();
 
   List<Attachements> pjs = [];
-  Iteration iteration;
+  Iteration? iteration;
   final _formKey = GlobalKey<FormState>();
-  String _selectedOperation;
+  String? _selectedOperation;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -65,34 +65,34 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
     super.initState();
 
     if (widget.iteration != null) {
-      iteration = widget.iteration.copyWith();
+      iteration = widget.iteration!.copyWith();
     } else {
       iteration = Iteration();
     }
-    iteration.devise = widget.dossier.devise;
+    iteration!.devise = widget.dossier!.devise;
     rateController.text =
-        iteration.taux != null ? iteration.taux.toStringAsFixed(0) : '';
-    amountController.text = iteration.amountTND != null
-        ? iteration.amountTND.toStringAsFixed(0)
+        iteration!.taux != null ? iteration!.taux!.toStringAsFixed(0) : '';
+    amountController.text = iteration!.amountTND != null
+        ? iteration!.amountTND!.toStringAsFixed(0)
         : '';
-    amountDeviseController.text = iteration.amountDevise != null
-        ? iteration.amountDevise.toStringAsFixed(0)
+    amountDeviseController.text = iteration!.amountDevise != null
+        ? iteration!.amountDevise!.toStringAsFixed(0)
         : '';
-    titleController.text = iteration.name ?? '';
-    notesController.text = iteration.description ?? '';
-    iteration.type = widget.typeTransaction;
-    _selectedOperation = iteration.operation;
-    context.read<AttachementsBloc>().add(LoadAttachementss(iteration.id));
+    titleController.text = iteration!.name ?? '';
+    notesController.text = iteration!.description ?? '';
+    iteration!.type = widget.typeTransaction;
+    _selectedOperation = iteration!.operation;
+    context.read<AttachementsBloc>().add(LoadAttachementss(iteration!.id!));
   }
 
-  Future<FilePickerResult> pickFile() async {
+  Future<FilePickerResult?> pickFile() async {
     return await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
   }
 
-  Future<FilePickerResult> pickPhoto() async {
+  Future<FilePickerResult?> pickPhoto() async {
     return await FilePicker.platform.pickFiles(
       type: FileType.image,
     );
@@ -109,7 +109,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
       if (widget.iteration != null) {
         context
             .read<AttachementsBloc>()
-            .add(AddAttachements(filePath, fileName, widget.iteration.id));
+            .add(AddAttachements(filePath!, fileName, widget.iteration!.id!));
       } else {
         setState(() {
           pjs.add(Attachements(
@@ -132,7 +132,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
       if (widget.iteration != null) {
         context
             .read<AttachementsBloc>()
-            .add(AddAttachements(filePath, fileName, widget.iteration.id));
+            .add(AddAttachements(filePath!, fileName, widget.iteration!.id!));
       } else {
         setState(() {
           pjs.add(Attachements(
@@ -173,16 +173,16 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                 maskType: EasyLoadingMaskType.black,
               );
             } else if (state is IterationsLoaded) {
-              clientNavigatorKey.currentContext
+              clientNavigatorKey.currentContext!
                   .read<ClientBloc>()
                   .add(LoadClients(''));
-              clientNavigatorKey.currentContext.read<DossierBloc>().add(
+              clientNavigatorKey.currentContext!.read<DossierBloc>().add(
                   LoadDossiers(
-                      widget.dossier.statusFolder, widget.dossier.idClient));
-              accueilNavigatorKey.currentContext
+                      widget.dossier!.statusFolder!, widget.dossier!.idClient!));
+              accueilNavigatorKey.currentContext!
                   .read<StatsBloc>()
                   .add(LoadStats());
-              synchroNavigatorKey.currentContext
+              synchroNavigatorKey.currentContext!
                   .read<SyncBloc>()
                   .add(LoadDatabaseStats());
               Navigator.pop(context);
@@ -230,24 +230,24 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
           titleLineWidget: ButtonRaised(
             title: 'OK',
             onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                if (iteration.devise == 'TND') {
-                  iteration.amountDevise = iteration.amountTND;
+              if (_formKey.currentState!.validate()) {
+                if (iteration!.devise == 'TND') {
+                  iteration!.amountDevise = iteration!.amountTND;
                 }
                 if (widget.iteration != null) {
                   context
                       .read<IterationBloc>()
-                      .add(UpdateIteration(iteration, pjs));
+                      .add(UpdateIteration(iteration!, pjs));
                 } else {
-                  iteration.idFolder = widget.dossier.id;
-                  iteration.createdAt = DateTime.now();
-                  iteration.idClient = widget.dossier.idClient;
-                  if (iteration.devise != 'TND') {
-                    iteration.amountTND = double.parse(amountController.text);
+                  iteration!.idFolder = widget.dossier!.id;
+                  iteration!.createdAt = DateTime.now();
+                  iteration!.idClient = widget.dossier!.idClient;
+                  if (iteration!.devise != 'TND') {
+                    iteration!.amountTND = double.parse(amountController.text);
                   }
                   context
                       .read<IterationBloc>()
-                      .add(AddIteration(iteration, pjs));
+                      .add(AddIteration(iteration!, pjs));
                 }
               }
             },
@@ -269,7 +269,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                       labelText: 'Titre',
                       onChanged: (value) {
                         setState(() {
-                          iteration.name = value;
+                          iteration!.name = value;
                         });
                       },
                       validator: (value) {
@@ -288,7 +288,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                           signed: false, decimal: true),
                       onChanged: (value) {
                         setState(() {});
-                        iteration.amountTND = double.parse(value);
+                        iteration!.amountTND = double.parse(value);
                       },
                       controller: amountController,
                       validator: (value) {
@@ -298,12 +298,12 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                         return null;
                       },
                     ),
-                    if (widget.dossier.devise != 'TND') ...[
+                    if (widget.dossier!.devise != 'TND') ...[
                       const SizedBox(
                         height: 30,
                       ),
                       Text(
-                        'Devise : ' + widget.dossier.devise,
+                        'Devise : ' + widget.dossier!.devise!,
                         style: AppThemes.bigTextStyle,
                       ),
                       CustomTextField(
@@ -316,24 +316,24 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                         labelText: 'Montant devise',
                         onChanged: (value) {
                           setState(() {
-                            iteration.amountDevise = double.parse(value);
-                            if (iteration.taux != null &&
-                                iteration.amountDevise != null &&
+                            iteration!.amountDevise = double.parse(value);
+                            if (iteration!.taux != null &&
+                                iteration!.amountDevise != null &&
                                 _selectedOperation != null &&
-                                _selectedOperation.isNotEmpty) {
+                                _selectedOperation!.isNotEmpty) {
                               if (_selectedOperation == '/') {
                                 setState(() {
-                                  iteration.amountTND =
-                                      iteration.amountDevise / iteration.taux;
+                                  iteration!.amountTND =
+                                      iteration!.amountDevise! / iteration!.taux!;
                                   amountController.text =
-                                      iteration.amountTND.toStringAsFixed(0);
+                                      iteration!.amountTND!.toStringAsFixed(0);
                                 });
                               } else {
                                 setState(() {
-                                  iteration.amountTND =
-                                      iteration.taux * iteration.amountDevise;
+                                  iteration!.amountTND =
+                                      iteration!.taux! * iteration!.amountDevise!;
                                   amountController.text =
-                                      iteration.amountTND.toStringAsFixed(0);
+                                      iteration!.amountTND!.toStringAsFixed(0);
                                 });
                               }
                             }
@@ -341,7 +341,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                         },
                         validator: (value) {
                           if ((value == null || value.isEmpty) &&
-                              iteration.devise != 'TND') {
+                              iteration!.devise != 'TND') {
                             return 'Obligatoire';
                           }
                           return null;
@@ -354,7 +354,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                       Row(
                         children: [
                           Expanded(
-                            child: DropdownButtonFormField2(
+                            child: DropdownButtonFormField2<String>(
                               scrollbarAlwaysShow: false,
                               value: _selectedOperation,
                               style: AppThemes.bodyGreyTextStyle
@@ -419,22 +419,22 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                               onChanged: (value) {
                                 setState(() {
                                   _selectedOperation = value;
-                                  iteration.operation = value;
+                                  iteration!.operation = value;
                                 });
-                                if (iteration.taux != null &&
-                                    iteration.amountDevise != null &&
+                                if (iteration!.taux != null &&
+                                    iteration!.amountDevise != null &&
                                     _selectedOperation != null &&
-                                    _selectedOperation.isNotEmpty) {
+                                    _selectedOperation!.isNotEmpty) {
                                   if (_selectedOperation == '/') {
-                                    iteration.amountTND =
-                                        iteration.amountDevise / iteration.taux;
+                                    iteration!.amountTND =
+                                        iteration!.amountDevise! / iteration!.taux!;
                                     amountController.text =
-                                        iteration.amountTND.toStringAsFixed(0);
+                                        iteration!.amountTND!.toStringAsFixed(0);
                                   } else {
-                                    iteration.amountTND =
-                                        iteration.amountDevise * iteration.taux;
+                                    iteration!.amountTND =
+                                        iteration!.amountDevise! * iteration!.taux!;
                                     amountController.text =
-                                        iteration.amountTND.toStringAsFixed(0);
+                                        iteration!.amountTND!.toStringAsFixed(0);
                                   }
                                 }
                               },
@@ -464,24 +464,24 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                               labelText: 'Taux',
                               onChanged: (value) {
                                 setState(() {
-                                  iteration.taux =
+                                  iteration!.taux =
                                       double.parse(value.replaceAll(',', "."));
-                                  if (iteration.taux != null &&
-                                      iteration.amountDevise != null &&
+                                  if (iteration!.taux != null &&
+                                      iteration!.amountDevise != null &&
                                       _selectedOperation != null &&
-                                      _selectedOperation.isNotEmpty) {
+                                      _selectedOperation!.isNotEmpty) {
                                     if (_selectedOperation == '/') {
-                                      iteration.amountTND =
-                                          iteration.amountDevise /
-                                              iteration.taux;
-                                      amountController.text = iteration
-                                          .amountTND
+                                      iteration!.amountTND =
+                                          iteration!.amountDevise! /
+                                              iteration!.taux!;
+                                      amountController.text = iteration!
+                                          .amountTND!
                                           .toStringAsFixed(0);
                                     } else {
-                                      iteration.amountTND = iteration.taux *
-                                          iteration.amountDevise;
-                                      amountController.text = iteration
-                                          .amountTND
+                                      iteration!.amountTND = iteration!.taux! *
+                                          iteration!.amountDevise!;
+                                      amountController.text = iteration!
+                                          .amountTND!
                                           .toStringAsFixed(0);
                                     }
                                   }
@@ -489,7 +489,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                               },
                               validator: (value) {
                                 if ((value == null || value.isEmpty) &&
-                                    iteration.devise != 'TND') {
+                                    iteration!.devise != 'TND') {
                                   return 'Obligatoire';
                                 }
                                 return null;
@@ -504,7 +504,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                       height: 20,
                     ),
                     CustomTextField(
-                      initalValue: iteration.description ?? '',
+                      initalValue: iteration!.description ?? '',
                       labelText: 'Remarques',
                       controller: notesController,
                       isTextArea: true,
@@ -512,7 +512,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                       maxlines: 10,
                       onChanged: (v) {
                         setState(() {
-                          iteration.description = v;
+                          iteration!.description = v;
                         });
                       },
                     ),
@@ -556,7 +556,7 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                                             ? AppColor.appPrimaryColor
                                             : AppColor.appSecondaryColor,
                                       ),
-                                      title: Text(item.name,
+                                      title: Text(item.name!,
                                           style: AppThemes.kbirShwyTextStyle),
                                       trailing: IconButton(
                                         onPressed: () {

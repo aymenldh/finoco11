@@ -7,14 +7,14 @@ class RegisterState {
   final bool isSuccess;
   final bool isFailure;
   final int failureCode;
-  final UserCredential user;
-  final bool guestLoggedIn;
+  final UserCredential? user;
+  final bool? guestLoggedIn;
 
   RegisterState({
-    @required this.isSubmitting,
-    @required this.isSuccess,
-    @required this.isFailure,
-    @required this.failureCode,
+    required this.isSubmitting,
+    required this.isSuccess,
+    required this.isFailure,
+    required this.failureCode,
     this.guestLoggedIn,
     this.user,
   });
@@ -67,9 +67,9 @@ class RegisterState {
   }
 
   RegisterState copyWith({
-    bool isSubmitting,
-    bool isSuccess,
-    bool isFailure,
+    bool? isSubmitting,
+    bool? isSuccess,
+    bool? isFailure,
   }) {
     return RegisterState(
       isSubmitting: isSubmitting ?? this.isSubmitting,

@@ -16,7 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SynchroScreen extends StatefulWidget {
-  const SynchroScreen({Key key}) : super(key: key);
+  const SynchroScreen({Key? key}) : super(key: key);
 
   @override
   State<SynchroScreen> createState() => _SynchroScreenState();

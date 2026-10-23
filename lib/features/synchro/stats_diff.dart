@@ -16,7 +16,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DifferenceStats extends StatefulWidget {
-  DifferenceStats({Key key}) : super(key: key);
+  DifferenceStats({Key? key}) : super(key: key);
 
   @override
   State<DifferenceStats> createState() => _DifferenceStatsState();
@@ -28,10 +28,10 @@ class _DifferenceStatsState extends State<DifferenceStats> {
     return BlocListener<SyncBloc, SyncState>(
       listener: (context, state) {
         if (state is SyncSuccess) {
-          clientNavigatorKey.currentContext
+          clientNavigatorKey.currentContext!
               .read<ClientBloc>()
               .add(LoadClients(''));
-          accueilNavigatorKey.currentContext.read<StatsBloc>().add(LoadStats());
+          accueilNavigatorKey.currentContext!.read<StatsBloc>().add(LoadStats());
         }
       },
       child: BlocBuilder<SyncBloc, SyncState>(
@@ -41,7 +41,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
           } else if (state is SyncFailure) {
             return const Center(child: Text('Error'));
           } else if (state is SyncSuccess) {
-            return buildComparisonTable(state.localStats, state.remoteStats);
+            return buildComparisonTable(state.localStats!, state.remoteStats!);
           } else {
             return const Center(child: const Text('No data available.'));
           }
@@ -165,7 +165,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (remote.clients < local.clients)
+                if (remote.clients! < local.clients!)
                   const Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -185,7 +185,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (remote.dossiers < local.dossiers)
+                if (remote.dossiers! < local.dossiers!)
                   const Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -205,7 +205,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (remote.services < local.services)
+                if (remote.services! < local.services!)
                   const Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -225,7 +225,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (remote.paiements < local.paiements)
+                if (remote.paiements! < local.paiements!)
                   const Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -314,7 +314,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (remote.clients > local.clients)
+                if (remote.clients! > local.clients!)
                   const Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -334,7 +334,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (remote.dossiers > local.dossiers)
+                if (remote.dossiers! > local.dossiers!)
                   const Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -354,7 +354,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (remote.services > local.services)
+                if (remote.services! > local.services!)
                   const Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -374,7 +374,7 @@ class _DifferenceStatsState extends State<DifferenceStats> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (remote.paiements > local.paiements)
+                if (remote.paiements! > local.paiements!)
                   const Icon(
                     Icons.warning,
                     color: Colors.red,

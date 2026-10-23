@@ -3,7 +3,7 @@ import 'package:finoco/features/devise/devises_screen.dart';
 import 'package:flutter/material.dart';
 
 class DevisesPage extends StatelessWidget {
-  const DevisesPage({Key key}) : super(key: key);
+  const DevisesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,13 +1,13 @@
 class Client {
-  int id;
-  String firstName;
-  String lastName;
-  String address;
-  String phone;
-  String email;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? address;
+  String? phone;
+  String? email;
   bool archiver;
-  DateTime createdAt;
-  String notes;
+  DateTime? createdAt;
+  String? notes;
 
   Client({
     this.id,
@@ -18,7 +18,7 @@ class Client {
     this.email,
     this.createdAt,
     this.notes,
-    this.archiver,
+    this.archiver = false,
   });
 
   bool isEqual(Client other) {
@@ -55,7 +55,7 @@ class Client {
       'address': address,
       'phone': phone,
       'email': email,
-      'createdAt': createdAt.toIso8601String(),
+      'createdAt': createdAt!.toIso8601String(),
       'notes': notes,
       'archiver': archiver ? 1 : 0,
     };
@@ -64,16 +64,16 @@ class Client {
   String get fullName => '${firstName ?? ''} ${lastName ?? ''}';
 
   Client copyWith({
-    String id,
-    String firstName,
-    String lastName,
-    String address,
-    String phone,
-    String email,
-    DateTime createdAt,
-    String notes,
-    bool archiver,
-    String operation,
+    int? id,
+    String? firstName,
+    String? lastName,
+    String? address,
+    String? phone,
+    String? email,
+    DateTime? createdAt,
+    String? notes,
+    bool? archiver,
+    String? operation,
   }) {
     return Client(
       id: id ?? this.id,

@@ -14,10 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IterationWidget extends StatelessWidget {
-  final Iteration iteration;
-  final Dossier dossier;
+  final Iteration? iteration;
+  final Dossier? dossier;
   const IterationWidget({
-    Key key,
+    Key? key,
     this.iteration,
     this.dossier,
   }) : super(key: key);
@@ -32,16 +32,16 @@ class IterationWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (iteration.description != null &&
-                iteration.description.isNotEmpty)
+            if (iteration!.description != null &&
+                iteration!.description!.isNotEmpty)
               const Icon(
                 Icons.warning_amber_rounded,
                 color: Colors.orange,
               ),
-            if (iteration.description == null || iteration.description.isEmpty)
+            if (iteration!.description == null || iteration!.description!.isEmpty)
               FutureBuilder<bool>(
                   future: DatabaseHelper.instance
-                      .iterationHasAttachments(iteration.id),
+                      .iterationHasAttachments(iteration!.id!),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator(); // Loading indicator
@@ -75,12 +75,12 @@ class IterationWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    iteration.name,
+                    iteration!.name!,
                     style: AppThemes.tileTitleTextStyle,
                   ),
-                  if (iteration.description != null)
+                  if (iteration!.description != null)
                     Text(
-                      iteration.description,
+                      iteration!.description!,
                       style: AppThemes.regularTextStyle,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -92,16 +92,16 @@ class IterationWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    if (dossier.devise == 'TND')
-                      Text(iteration.amountTND.toStringAsFixed(0) + ' TND',
+                    if (dossier!.devise == 'TND')
+                      Text(iteration!.amountTND!.toStringAsFixed(0) + ' TND',
                           style: AppThemes.monnaieTextStyle),
-                    if (dossier.devise != 'TND') ...[
+                    if (dossier!.devise != 'TND') ...[
                       Text(
-                          iteration.amountDevise.toStringAsFixed(0) +
+                          iteration!.amountDevise!.toStringAsFixed(0) +
                               ' ' +
-                              iteration.devise,
+                              iteration!.devise!,
                           style: AppThemes.monnaieTextStyle),
-                      Text(iteration.amountTND.toStringAsFixed(0) + ' TND',
+                      Text(iteration!.amountTND!.toStringAsFixed(0) + ' TND',
                           style: AppThemes.monnaieTextStyle),
                     ]
                   ],
@@ -113,12 +113,12 @@ class IterationWidget extends StatelessWidget {
                   onSelected: (String value) {
                     // Handle menu item selection
                     if (value == 'Modifier') {
-                      clientNavigatorKey.currentState.push(
+                      clientNavigatorKey.currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => AddTransactonScreen(
                             iteration: iteration,
                             dossier: dossier,
-                            typeTransaction: iteration.type,
+                            typeTransaction: iteration!.type!,
                           ),
                         ),
                       );
@@ -137,10 +137,10 @@ class IterationWidget extends StatelessWidget {
                           enableDrag: true,
                           backgroundColor: Colors.white,
                           builder: (context) => TransferButtomSheet(
-                                idIteration: iteration.id,
-                                typeTransaction: iteration.type,
-                                idClient: dossier.idClient,
-                                idDossier: iteration.idFolder,
+                                idIteration: iteration!.id!,
+                                typeTransaction: iteration!.type!,
+                                idClient: dossier!.idClient!,
+                                idDossier: iteration!.idFolder!,
                               ));
                     } else if (value == 'Supprimer') {
                       showDialog(
@@ -186,12 +186,12 @@ class IterationWidget extends StatelessWidget {
                                     onPressed: () async {
                                       await DatabaseHelper.instance
                                           .deleteIteration(
-                                        iteration.id,
+                                        iteration!.id!,
                                       );
                                       context.read<IterationBloc>().add(
                                           LoadIterations(
-                                              iteration.type.name, dossier.id));
-                                      synchroNavigatorKey.currentContext
+                                              iteration!.type!.name, dossier!.id!));
+                                      synchroNavigatorKey.currentContext!
                                           .read<SyncBloc>()
                                           .add(LoadDatabaseStats());
                                       Navigator.of(context).pop();

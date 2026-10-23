@@ -20,7 +20,7 @@ class BannerCarousel extends StatefulWidget {
   ///     BannerModel(imagePath: '/assets/banner1.png', id: "1"),
   ///     BannerModel(imagePath: '"https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg"', id: "2"),
   /// ]
-  final List<BannerModel> banners;
+  final List<BannerModel>? banners;
 
   /// [animation] teh indicator.
   /// Default value [true]
@@ -66,38 +66,38 @@ class BannerCarousel extends StatefulWidget {
   /// The [margin] around the component.
   ///
   /// Default value [EdgeInsets.symmetric(horizontal: 16.0)]
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? margin;
 
   /// Default value [Color(0xFF10306D)]
-  final Color activeColor;
+  final Color? activeColor;
 
   /// Default value [Color(0xFFC4C4C4)]
-  final Color disableColor;
+  final Color? disableColor;
 
   /// Default value [IndicatorModel.animation(width: 10, height: 10, spaceBetween: 3.0)]
   final IndicatorModel customizedIndicators;
 
   /// Called whenever the page in the center of the viewport changes.
   /// Return a [int]
-  final ValueChanged<int> onPageChanged;
+  final ValueChanged<int>? onPageChanged;
 
   /// Called whenever the Banner is Tap.
-  final Function(String id) onTap;
+  final Function(String id)? onTap;
 
   ///When you need to create your own Widget banners
-  final List<Widget> customizedBanners;
+  final List<Widget>? customizedBanners;
 
   /// Margin between the banner
   final double spaceBetween;
 
   /// Margin between the banner
-  final PageController pageController;
+  final PageController? pageController;
 
   /// ```dart
   ///  BannersCarousel(banners: BannerImages.listBanners)
   /// ```
   const BannerCarousel({
-    Key key,
+    Key? key,
     this.banners,
     this.height = 150,
     this.borderRadius = 5,
@@ -129,7 +129,7 @@ class BannerCarousel extends StatefulWidget {
   /// BannersCarousel.fullScreen(banners: BannerImages.listBanners),
   /// ```
   const BannerCarousel.fullScreen({
-    Key key,
+    Key? key,
     this.banners,
     this.height = 150,
     this.borderRadius = 0,
@@ -161,7 +161,7 @@ class BannerCarousel extends StatefulWidget {
 }
 
 class _BannerCarouselState extends State<BannerCarousel> {
-  int _page;
+  int? _page;
 
   @override
   void initState() {
@@ -177,17 +177,17 @@ class _BannerCarouselState extends State<BannerCarousel> {
   Color get _activeColor => widget.activeColor ?? const Color(0xFF10306D);
   Color get _disableColor => widget.disableColor ?? const Color(0xFFC4C4C4);
 
-  List<dynamic> get _banners => widget.customizedBanners ?? widget.banners;
+  List<dynamic> get _banners => widget.customizedBanners ?? widget.banners!;
 
   List<Widget> get _listBanners =>
       widget.customizedBanners ??
-      widget.banners
+      widget.banners!
           .map((banner) => BannerWidget(
                 key: Key("Banner${banner.id}"),
                 bannerModel: banner,
                 spaceBetween: widget.spaceBetween,
                 onTap: widget.onTap != null
-                    ? () => widget.onTap(banner.id)
+                    ? () => widget.onTap!(banner.id)
                     : () => print("Double Tap Banner ${banner.id}"),
                 borderRadius: widget.borderRadius,
               ))
@@ -261,7 +261,7 @@ class _BannerCarouselState extends State<BannerCarousel> {
   /// returning an integer value
   void _onChangePage(int index) {
     if (widget.onPageChanged != null) {
-      widget.onPageChanged(index);
+      widget.onPageChanged!(index);
     }
     setState(() => _page = index);
   }

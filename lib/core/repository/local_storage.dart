@@ -2,15 +2,15 @@ import 'package:finoco/core/models/login_helper.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LocalStorage {
-  static LocalStorage _instance;
+  static LocalStorage? _instance;
 
-  factory LocalStorage() => _instance;
+  factory LocalStorage() => getInstance();
 
   LocalStorage._internal();
 
   static LocalStorage getInstance() {
     _instance ??= LocalStorage._internal();
-    return _instance;
+    return _instance!;
   }
 
   final _box = GetStorage();
@@ -19,7 +19,7 @@ class LocalStorage {
     await _box.write("accessToken", accessToken);
   }
 
-  Future<String> getAccessToken() async {
+  Future<String?> getAccessToken() async {
     return _box.read("accessToken");
   }
 
@@ -28,10 +28,10 @@ class LocalStorage {
   }
 
   Future<void> setLastLogin(LogInHelper login) async {
-    await _box.write(login.email, login.toJson());
+    await _box.write(login.email!, login.toJson());
   }
 
-  Future<String> getLastLogin(String email) async {
+  Future<String?> getLastLogin(String email) async {
     return _box.read(email);
   }
 
@@ -43,7 +43,7 @@ class LocalStorage {
     await _box.write("SaveLogin", saveLogin);
   }
 
-  Future<bool> getSaveLogin() async {
+  Future<bool?> getSaveLogin() async {
     return _box.read("SaveLogin");
   }
 
@@ -52,7 +52,7 @@ class LocalStorage {
   }
 
   Future<List<String>> setFavorite(String id) async {
-    List res = _box.read('favorite');
+    List? res = _box.read('favorite');
 
     if (res == null || res.isEmpty) {
       await _box.write('favorite', [id]);
@@ -65,8 +65,8 @@ class LocalStorage {
   }
 
   Future<List<String>> deleteFavorite(String id) async {
-    List<String> res = _box.read('favorite').cast<String>();
-    if (res != null || res.isNotEmpty) {
+    List<String> res = (_box.read('favorite') as List?)?.cast<String>() ?? [];
+    if (res.isNotEmpty) {
       res.removeWhere((element) => element == id);
       await _box.write('favorite', res);
       return res;
@@ -74,7 +74,7 @@ class LocalStorage {
     return [];
   }
 
-  List<String> getFavorites() {
+  List<String>? getFavorites() {
     return _box.read('favorite')?.cast<String>();
   }
 }

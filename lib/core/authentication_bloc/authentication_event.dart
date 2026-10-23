@@ -8,7 +8,7 @@ class AppStarted extends AuthenticationEvent {}
 class AppOnBoardingFinished extends AuthenticationEvent {}
 
 class LoggedIn extends AuthenticationEvent {
-  final String accessToken;
+  final String? accessToken;
   final String sub;
   LoggedIn(this.sub, {this.accessToken});
 

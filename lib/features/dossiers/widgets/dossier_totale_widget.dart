@@ -5,10 +5,10 @@ import 'package:finoco/core/repository/dbhelper.dart';
 import 'package:flutter/material.dart';
 
 class DossierTotaleWidget extends StatelessWidget {
-  final Dossier dossier;
+  final Dossier? dossier;
   final bool isAddIteration;
   const DossierTotaleWidget({
-    Key key,
+    Key? key,
     this.dossier,
     this.isAddIteration = false,
   }) : super(key: key);
@@ -21,15 +21,15 @@ class DossierTotaleWidget extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       color: Colors.white,
       child: FutureBuilder<Statistiques>(
-        future: dossier.devise == 'TND'
-            ? DatabaseHelper.instance.getTNDStatsByDossier(dossier.id)
-            : DatabaseHelper.instance.getDossierStats(dossier.id),
+        future: dossier!.devise == 'TND'
+            ? DatabaseHelper.instance.getTNDStatsByDossier(dossier!.id!)
+            : DatabaseHelper.instance.getDossierStats(dossier!.id!),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const SizedBox();
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (dossier.devise == 'TND')
+              if (dossier!.devise == 'TND')
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -38,14 +38,14 @@ class DossierTotaleWidget extends StatelessWidget {
                             ? 'Totale dossier courant :'
                             : 'Totale :',
                         style: AppThemes.titleTextStyle),
-                    Text(snapshot.data.somme.toStringAsFixed(0) + ' TND',
-                        style: snapshot.data.somme.isNegative
+                    Text(snapshot.data!.somme.toStringAsFixed(0) + ' TND',
+                        style: snapshot.data!.somme.isNegative
                             ? AppThemes.monnaieTextStyle
                                 .copyWith(color: Colors.red)
                             : AppThemes.monnaieTextStyle)
                   ],
                 ),
-              if (dossier.devise != 'TND') ...[
+              if (dossier!.devise != 'TND') ...[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -57,10 +57,10 @@ class DossierTotaleWidget extends StatelessWidget {
                           style: AppThemes.titleTextStyle),
                     ),
                     Text(
-                        snapshot.data.sommeDevise.toStringAsFixed(0) +
+                        snapshot.data!.sommeDevise.toStringAsFixed(0) +
                             ' ' +
-                            dossier.devise,
-                        style: snapshot.data.somme.isNegative
+                            dossier!.devise!,
+                        style: snapshot.data!.somme.isNegative
                             ? AppThemes.monnaieTextStyle
                                 .copyWith(color: Colors.red)
                             : AppThemes.monnaieTextStyle)
@@ -74,8 +74,8 @@ class DossierTotaleWidget extends StatelessWidget {
                             ? 'Totale dossier courant TND:'
                             : 'Totale TND :',
                         style: AppThemes.titleTextStyle),
-                    Text(snapshot.data.somme.toStringAsFixed(0) + ' TND',
-                        style: snapshot.data.somme.isNegative
+                    Text(snapshot.data!.somme.toStringAsFixed(0) + ' TND',
+                        style: snapshot.data!.somme.isNegative
                             ? AppThemes.monnaieTextStyle
                                 .copyWith(color: Colors.red)
                             : AppThemes.monnaieTextStyle)

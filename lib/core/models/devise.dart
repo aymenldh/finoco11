@@ -1,6 +1,6 @@
 class Devise {
-  int id;
-  String nom;
+  int? id;
+  String? nom;
 
   Devise({this.id, this.nom});
 

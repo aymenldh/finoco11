@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'config/theme/theme.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> _conf() async {
-    bool isAutoConnect = await LocalStorage.getInstance().getSaveLogin();
+    bool? isAutoConnect = await LocalStorage.getInstance().getSaveLogin();
     if (isAutoConnect != null && isAutoConnect) {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null && user.uid != null) {

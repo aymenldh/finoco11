@@ -30,7 +30,7 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
       final Dossier dossier =
           await DatabaseHelper.instance.getDossierByID(event.idFolder);
       final Client client =
-          await DatabaseHelper.instance.getClientByID(dossier.idClient);
+          await DatabaseHelper.instance.getClientByID(dossier.idClient!);
       final services =
           await _fetchIterations(event.idFolder, TypeTransaction.SERVICE.name);
       final paiements =
@@ -41,7 +41,7 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
       // final double totalPaymentAmount = _calculateTotal(paiements);
 
       emit(ExportsLoaded(await generatePdf(
-          services, paiements, client.fullName, client.phone, dossier.devise)));
+          services, paiements, client.fullName, client.phone!, dossier.devise!)));
     } catch (error) {
       emit(ExportsError());
     }
@@ -68,7 +68,7 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
 
   double _calculateTotal(List<Iteration> iterations) {
     return iterations.fold(
-        0.0, (sum, iteration) => sum + iteration.amountDevise);
+        0.0, (sum, iteration) => sum + iteration.amountDevise!);
   }
 
   String _formatDate(DateTime date) {
@@ -191,13 +191,13 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
       PdfGridRow row = grid.rows.add();
 
       if (i < services.length) {
-        row.cells[0].value = _formatDate(services.elementAt(i).createdAt);
+        row.cells[0].value = _formatDate(services.elementAt(i).createdAt!);
         row.cells[1].value = services.elementAt(i).name;
         row.cells[1].style.stringFormat = PdfStringFormat(
             alignment: PdfTextAlignment.center,
             textDirection: PdfTextDirection.rightToLeft);
         row.cells[2].value =
-            services.elementAt(i).amountDevise.toStringAsFixed(0);
+            services.elementAt(i).amountDevise!.toStringAsFixed(0);
         row.cells[2].style.borders = PdfBorders(
             right: PdfPen(PdfColor.fromCMYK(0, 0, 0, 200), width: 3));
       } else if (i == services.length) {
@@ -227,13 +227,13 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
             right: PdfPen(PdfColor.fromCMYK(0, 0, 0, 200), width: 3));
       }
       if (i < payments.length) {
-        row.cells[3].value = _formatDate(payments.elementAt(i).createdAt);
+        row.cells[3].value = _formatDate(payments.elementAt(i).createdAt!);
         row.cells[4].value = payments.elementAt(i).name;
         row.cells[4].style.stringFormat = PdfStringFormat(
             alignment: PdfTextAlignment.center,
             textDirection: PdfTextDirection.rightToLeft);
         row.cells[5].value =
-            payments.elementAt(i).amountDevise.toStringAsFixed(0);
+            payments.elementAt(i).amountDevise!.toStringAsFixed(0);
       } else if (i == payments.length) {
         // row.cells[3].style = PdfGridCellStyle(
         //   borders: PdfBorders(bottom: PdfPens.transparent),

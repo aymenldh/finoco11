@@ -8,12 +8,12 @@ class SocialButton extends StatelessWidget {
   final bool enabled;
 
   const SocialButton(
-      {Key key,
-      @required this.child,
+      {Key? key,
+      required this.child,
       this.width = double.infinity,
       this.height = 55.0,
       this.enabled = true,
-      @required VoidCallback onPressed})
+      required VoidCallback onPressed})
       : _onPressed = onPressed,
         super(key: key);
 

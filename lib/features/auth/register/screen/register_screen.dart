@@ -19,7 +19,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:validators/validators.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key key}) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -32,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  RegisterBloc _registerBloc;
+  RegisterBloc? _registerBloc;
   final _formKey = GlobalKey<FormState>();
   bool passwordValid = false;
 
@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: BlocProvider<RegisterBloc>(
-        create: (context) => _registerBloc,
+        create: (context) => _registerBloc!,
         child: ScaffoldHeader(
           showBackButton: false,
           backgroundColor: AppColor.appSecondaryBackground,
@@ -152,10 +152,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     textInputAction: TextInputAction.next,
                                     controller: _emailController,
                                     validator: (value) {
-                                      if (value.isEmpty) {
+                                      if (value!.isEmpty) {
                                         return 'requiredField';
                                       }
-                                      if (!isEmail(value)) {
+                                      if (!isEmail(value!)) {
                                         return 'emailInvalidError';
                                       }
                                       return null;
@@ -196,10 +196,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     textInputAction: TextInputAction.done,
                                     controller: _confirmPasswordController,
                                     validator: (value) {
-                                      if (value.isEmpty) {
+                                      if (value!.isEmpty) {
                                         return 'requiredField';
                                       }
-                                      if (value.length < 8) {
+                                      if (value!.length < 8) {
                                         return 'passwordInvalidError';
                                       }
                                       if (value != _passwordController.text) {
@@ -296,8 +296,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _onFormSubmitted() async {
-    if (_formKey.currentState.validate()) {
-      _registerBloc.add(
+    if (_formKey.currentState!.validate()) {
+      _registerBloc!.add(
         Submitted(
           registrationType: 'email',
           email: _emailController.text,

@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccueilScreen extends StatelessWidget {
   const AccueilScreen({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

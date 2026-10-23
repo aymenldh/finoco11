@@ -20,7 +20,7 @@ class BannerModel {
   ///
   /// BannerModel(imagePath: '"https://picjumbo.com/wp-content/uploads/the-golden-gate-bridge-sunset-1080x720.jpg"', id: "2"),
   BannerModel(
-      {@required this.imagePath,
-      @required this.id,
+      {required this.imagePath,
+      required this.id,
       this.boxFit = BoxFit.cover});
 }

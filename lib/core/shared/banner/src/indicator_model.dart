@@ -9,9 +9,9 @@ class IndicatorModel {
 
   /// Used for non-animated indicators
   const IndicatorModel({
-    double width,
-    double height,
-    double spaceBetween,
+    double width = 10,
+    double height = 10,
+    double spaceBetween = 3.0,
   })  : _height = height,
         _width = width,
         _widthAnimation = width,
@@ -28,12 +28,12 @@ class IndicatorModel {
   /// ```
   ///
   const IndicatorModel.animation({
-    double width,
-    double widthAnimation,
-    double height,
-    double heightAnimation,
-    double spaceBetween,
-    double spaceBetweenAnimation,
+    double width = 10,
+    double? widthAnimation,
+    double height = 10,
+    double? heightAnimation,
+    double spaceBetween = 3.0,
+    double? spaceBetweenAnimation,
   })  : _height = height,
         _width = width,
         _widthAnimation = widthAnimation ?? width + 20,

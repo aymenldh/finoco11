@@ -11,12 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class IterationDetails extends StatelessWidget {
-  final Iteration iteration;
-  const IterationDetails({Key key, this.iteration}) : super(key: key);
+  final Iteration? iteration;
+  const IterationDetails({Key? key, this.iteration}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    context.read<AttachementsBloc>().add(LoadAttachementss(iteration.id));
+    context.read<AttachementsBloc>().add(LoadAttachementss(iteration!.id!));
 
     return ScaffoldHeader(
       title: 'Détail',
@@ -29,11 +29,11 @@ class IterationDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  iteration.name,
+                  iteration!.name!,
                   style: AppThemes.sectionTitleTextStyle,
                 ),
                 Text(
-                  iteration.createdAt.toString().split(' ').first,
+                  iteration!.createdAt.toString().split(' ').first,
                   style: AppThemes.mediumTextStyle,
                 ),
               ],
@@ -44,33 +44,33 @@ class IterationDetails extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (iteration.devise != 'TND')
+                if (iteration!.devise != 'TND')
                   Text(
-                    iteration.amountDevise.toStringAsFixed(0) +
+                    iteration!.amountDevise!.toStringAsFixed(0) +
                         ' ' +
-                        iteration.devise,
+                        iteration!.devise!,
                     style: AppThemes.monnaieTextStyle,
                   ),
-                if (iteration.devise == 'TND') const SizedBox(),
+                if (iteration!.devise == 'TND') const SizedBox(),
                 Text(
-                  iteration.amountTND.toStringAsFixed(0) + ' TND',
+                  iteration!.amountTND!.toStringAsFixed(0) + ' TND',
                   style: AppThemes.monnaieTextStyle,
                 ),
               ],
             ),
-            if (iteration.devise != 'TND') ...[
+            if (iteration!.devise != 'TND') ...[
               const SizedBox(
                 height: 2.5,
               ),
               Text(
-                'Taux : ' + iteration.taux.toStringAsFixed(0),
+                'Taux : ' + iteration!.taux!.toStringAsFixed(0),
                 style: AppThemes.mediumTextStyle,
               ),
               const SizedBox(
                 height: 2.5,
               ),
               Text(
-                'Opération : ' + iteration.operation,
+                'Opération : ' + iteration!.operation!,
                 style: AppThemes.mediumTextStyle,
               ),
             ],
@@ -78,7 +78,7 @@ class IterationDetails extends StatelessWidget {
               height: 25,
             ),
             Text(
-              iteration.description ?? '',
+              iteration!.description ?? '',
               style: AppThemes.kbirShwyTextStyle,
             ),
             const SizedBox(
@@ -116,14 +116,14 @@ class IterationDetails extends StatelessWidget {
                           .map(
                             (item) => InkWell(
                               onTap: () {
-                                clientNavigatorKey.currentState
+                                clientNavigatorKey.currentState!
                                     .push(MaterialPageRoute(
                                   builder: (context) => PDFViewerPage(
-                                    name: item.name,
-                                    url: item.type.toLowerCase() == 'pdf'
+                                    name: item.name!,
+                                    url: item.type!.toLowerCase() == 'pdf'
                                         ? item.url
                                         : null,
-                                    imageUrl: item.type.toLowerCase() != 'pdf'
+                                    imageUrl: item.type!.toLowerCase() != 'pdf'
                                         ? item.url
                                         : null,
                                   ),
@@ -139,7 +139,7 @@ class IterationDetails extends StatelessWidget {
                                         ? AppColor.appPrimaryColor
                                         : AppColor.appSecondaryColor,
                                   ),
-                                  title: Text(item.name,
+                                  title: Text(item.name!,
                                       style: AppThemes.kbirShwyTextStyle),
                                 ),
                               ),

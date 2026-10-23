@@ -23,8 +23,8 @@ class Submitted extends LoginEvent {
 }
 
 class ConfirmSignIn extends LoginEvent {
-  final String newPassword;
-  final String email;
+  final String? newPassword;
+  final String? email;
   const ConfirmSignIn({
     this.email,
     this.newPassword,

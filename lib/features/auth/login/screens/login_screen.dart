@@ -19,7 +19,7 @@ import '../bloc/login_bloc.dart';
 import '../bloc/login_state.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  String currentLang;
+  String? currentLang;
 
   bool _checkBoxValue = false;
 
@@ -152,10 +152,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   controller: _emailController,
                                   labelText: 'E-mail',
                                   validator: (value) {
-                                    if (value.isEmpty) {
+                                    if (value!.isEmpty) {
                                       return 'requiredField';
                                     }
-                                    if (!isEmail(value)) {
+                                    if (!isEmail(value!)) {
                                       return 'emailInvalidError';
                                     }
                                     return null;
@@ -169,8 +169,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   autofillHints: const [AutofillHints.password],
                                   onEditingComplete: () {
                                     TextInput.finishAutofillContext();
-                                    if (_emailFormKey.currentState.validate()) {
-                                      _emailFormKey.currentState.save();
+                                    if (_emailFormKey.currentState!.validate()) {
+                                      _emailFormKey.currentState!.save();
                                       BlocProvider.of<LoginBloc>(context).add(
                                         Submitted(_emailController.text,
                                             _passwordController.text),
@@ -179,10 +179,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                   controller: _passwordController,
                                   validator: (value) {
-                                    if (value.isEmpty) {
+                                    if (value!.isEmpty) {
                                       return '_il10.requiredField(password)';
                                     }
-                                    if (value.length < 8) {
+                                    if (value!.length < 8) {
                                       return 'passwordInvalidError';
                                     }
                                     return null;
@@ -206,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         value: _checkBoxValue,
                                         onChanged: (v) {
                                           setState(() {
-                                            _checkBoxValue = v;
+                                            _checkBoxValue = v ?? false;
                                           });
                                         }),
                                     const Text('Rester connecté ?',
@@ -254,9 +254,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _onFormSubmitted() async {
     navigateToHome(accessToken: "", sub: "");
-    if (_emailFormKey.currentState.validate()) {
+    if (_emailFormKey.currentState!.validate()) {
       await LocalStorage.getInstance().setSaveLogin(_checkBoxValue);
-      _emailFormKey.currentState.save();
+      _emailFormKey.currentState!.save();
       BlocProvider.of<LoginBloc>(context).add(
         Submitted(_emailController.text, _passwordController.text),
       );
@@ -267,19 +267,19 @@ class _LoginScreenState extends State<LoginScreen> {
     BlocProvider.of<AuthenticationBloc>(context).add(NotActivated(user));
   }
 
-  void handleLoginSucceed({String sub, String accessToken}) {
+  void handleLoginSucceed({String? sub, String? accessToken}) {
     navigateToHome(sub: sub, accessToken: accessToken);
   }
 
-  void navigateToHome({String accessToken, String sub}) {
+  void navigateToHome({String? accessToken, String? sub}) {
     Navigator.popUntil(context, ModalRoute.withName('/'));
     BlocProvider.of<AuthenticationBloc>(context)
-        .add(LoggedIn(sub, accessToken: accessToken));
+        .add(LoggedIn(sub!, accessToken: accessToken));
     // context.read<ProfileBloc>().add(FetchProfile());
   }
 
   void handleLoginFailed(Failure state) {
-    Duration dif = state.blockedUntil?.difference(DateTime.now());
+    Duration? dif = state.blockedUntil?.difference(DateTime.now());
 
     showDialog(
       context: context,
