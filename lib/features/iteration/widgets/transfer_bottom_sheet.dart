@@ -113,7 +113,8 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
                 .read<StatsBloc>()
                 .add(LoadStats());
             clientNavigatorKey.currentContext!.read<IterationBloc>().add(
-                LoadIterations(widget.typeTransaction!.name, widget.idDossier!));
+                LoadIterations(
+                    widget.typeTransaction!.name, widget.idDossier!));
 
             Navigator.pop(context);
           }
@@ -248,7 +249,6 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
           builder: (context, state) {
             if (state is DossiersLoaded) {
               return DropdownButtonFormField2<Dossier>(
-                scrollbarAlwaysShow: false,
                 value: _selectedDossier,
                 style: AppThemes.bodyGreyTextStyle
                     .copyWith(color: AppColor.appSecondaryColor),
@@ -292,12 +292,13 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
                   ),
                 ),
                 isExpanded: true,
-                buttonHeight: 50,
-                buttonPadding: const EdgeInsets.only(left: 10, right: 10),
-                dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                dropdownMaxHeight: 250,
+                buttonStyleData: ButtonStyleData(
+                    height: 50,
+                    padding: const EdgeInsets.only(left: 10, right: 10)),
+                dropdownStyleData: DropdownStyleData(
+                    maxHeight: 250,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0))),
                 items: state.dossiers
                     .map((item) => DropdownMenuItem<Dossier>(
                           value: item,
@@ -311,7 +312,8 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
                     _selectedDossier = value;
                   });
                 },
-                icon: const Icon(Icons.keyboard_arrow_down),
+                iconStyleData:
+                    IconStyleData(icon: const Icon(Icons.keyboard_arrow_down)),
                 validator: (p0) {
                   if (p0 == null) {
                     return 'requiredField';
@@ -333,7 +335,6 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
           height: 25,
         ),
         DropdownButtonFormField2<TypeTransaction>(
-          scrollbarAlwaysShow: false,
           value: _selectedComponent,
           style: AppThemes.bodyGreyTextStyle
               .copyWith(color: AppColor.appSecondaryColor),
@@ -375,14 +376,15 @@ class _TransferButtomSheetState extends State<TransferButtomSheet> {
             ),
           ),
           isExpanded: true,
-          iconSize: 32,
-          icon: const Icon(Icons.keyboard_arrow_down_outlined),
-          buttonHeight: 50,
-          buttonPadding: const EdgeInsets.only(left: 10, right: 10),
-          dropdownDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-          dropdownMaxHeight: 250,
+          iconStyleData: IconStyleData(
+              iconSize: 32,
+              icon: const Icon(Icons.keyboard_arrow_down_outlined)),
+          buttonStyleData: ButtonStyleData(
+              height: 50, padding: const EdgeInsets.only(left: 10, right: 10)),
+          dropdownStyleData: DropdownStyleData(
+              maxHeight: 250,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(5.0))),
           items: TypeTransaction.values
               .map((item) => DropdownMenuItem<TypeTransaction>(
                     value: item,

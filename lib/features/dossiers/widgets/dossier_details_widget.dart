@@ -183,7 +183,8 @@ class _DossierDetailsWidgetState extends State<DossierDetailsWidget> {
                                 style: AppThemes.kbirShwyTextStyle,
                               ),
                               Text(
-                                snapshot.data!.totaleServices.toStringAsFixed(0),
+                                snapshot.data!.totaleServices
+                                    .toStringAsFixed(0),
                                 style: AppThemes.monnaieTextStyle.copyWith(
                                   color: Colors.black,
                                 ),

@@ -18,12 +18,13 @@ class PDFViewerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldHeader(
-      titleLineWidget: pdf! == null
+      titleLineWidget: pdf == null
           ? null
           : IconButton(
               icon: const Icon(Icons.ios_share_outlined),
               onPressed: () {
-                Share.shareFiles([pdf!.path], mimeTypes: ['application/pdf']);
+                SharePlus.instance.share(ShareParams(
+                    files: [XFile(pdf!.path, mimeType: 'application/pdf')]));
               }),
       title: name ?? '',
       child: pdf != null

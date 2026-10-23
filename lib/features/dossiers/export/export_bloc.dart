@@ -40,8 +40,8 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
       // final double totalServiceAmount = _calculateTotal(services);
       // final double totalPaymentAmount = _calculateTotal(paiements);
 
-      emit(ExportsLoaded(await generatePdf(
-          services, paiements, client.fullName, client.phone!, dossier.devise!)));
+      emit(ExportsLoaded(await generatePdf(services, paiements, client.fullName,
+          client.phone!, dossier.devise!)));
     } catch (error) {
       emit(ExportsError());
     }
@@ -283,7 +283,7 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
         bounds: Rect.fromLTWH(
             0, 0, page.getClientSize().width, page.getClientSize().height));
 // Save the document.
-    final List<int> bytes = document.save();
+    final List<int> bytes = await document.save();
     final Directory directory = await getApplicationDocumentsDirectory();
     final String filePath =
         '${directory.path}/${DateTime.now().millisecondsSinceEpoch.toString()}.pdf';

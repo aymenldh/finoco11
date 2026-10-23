@@ -23,9 +23,8 @@ class PaiementsScreen extends StatefulWidget {
 class _PaiementsScreenState extends State<PaiementsScreen> {
   @override
   Widget build(BuildContext context) {
-    context
-        .read<IterationBloc>()
-        .add(LoadIterations(TypeTransaction.PAIEMENT.name, widget.dossier!.id!));
+    context.read<IterationBloc>().add(
+        LoadIterations(TypeTransaction.PAIEMENT.name, widget.dossier!.id!));
 
     return Stack(
       children: [

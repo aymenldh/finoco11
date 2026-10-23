@@ -143,7 +143,6 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
                               );
                             } else if (snap is DevisesLoaded) {
                               return DropdownButtonFormField2<String>(
-                                scrollbarAlwaysShow: false,
                                 value: _selectedDevise,
                                 style: AppThemes.bodyGreyTextStyle.copyWith(
                                     color: AppColor.appSecondaryColor),
@@ -189,16 +188,19 @@ class _AddDossierScreenState extends State<AddDossierScreen> {
                                   ),
                                 ),
                                 isExpanded: true,
-                                iconSize: 32,
-                                icon: const Icon(
-                                    Icons.keyboard_arrow_down_outlined),
-                                buttonHeight: 50,
-                                buttonPadding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                dropdownDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                                dropdownMaxHeight: 250,
+                                iconStyleData: IconStyleData(
+                                    iconSize: 32,
+                                    icon: const Icon(
+                                        Icons.keyboard_arrow_down_outlined)),
+                                buttonStyleData: ButtonStyleData(
+                                    height: 50,
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10)),
+                                dropdownStyleData: DropdownStyleData(
+                                    maxHeight: 250,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0))),
                                 items: snap.devises
                                     .map((item) => DropdownMenuItem<String>(
                                           value: item.nom,

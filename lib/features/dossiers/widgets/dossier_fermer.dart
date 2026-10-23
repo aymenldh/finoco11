@@ -22,7 +22,9 @@ class DossierFermer extends StatelessWidget {
           children: [
             RefreshIndicator(
               onRefresh: () {
-                context.read<DossierBloc>().add(LoadDossiers(false, client!.id!));
+                context
+                    .read<DossierBloc>()
+                    .add(LoadDossiers(false, client!.id!));
                 return Future.delayed(const Duration(milliseconds: 100));
               },
               child: ListView(

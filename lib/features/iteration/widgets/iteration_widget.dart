@@ -38,7 +38,8 @@ class IterationWidget extends StatelessWidget {
                 Icons.warning_amber_rounded,
                 color: Colors.orange,
               ),
-            if (iteration!.description == null || iteration!.description!.isEmpty)
+            if (iteration!.description == null ||
+                iteration!.description!.isEmpty)
               FutureBuilder<bool>(
                   future: DatabaseHelper.instance
                       .iterationHasAttachments(iteration!.id!),
@@ -189,8 +190,8 @@ class IterationWidget extends StatelessWidget {
                                         iteration!.id!,
                                       );
                                       context.read<IterationBloc>().add(
-                                          LoadIterations(
-                                              iteration!.type!.name, dossier!.id!));
+                                          LoadIterations(iteration!.type!.name,
+                                              dossier!.id!));
                                       synchroNavigatorKey.currentContext!
                                           .read<SyncBloc>()
                                           .add(LoadDatabaseStats());

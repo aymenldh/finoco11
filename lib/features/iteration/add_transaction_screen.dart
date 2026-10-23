@@ -86,14 +86,14 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
   }
 
   Future<FilePickerResult?> pickFile() async {
-    return await FilePicker.platform.pickFiles(
+    return await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
   }
 
   Future<FilePickerResult?> pickPhoto() async {
-    return await FilePicker.platform.pickFiles(
+    return await FilePicker.pickFiles(
       type: FileType.image,
     );
   }
@@ -177,8 +177,8 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                   .read<ClientBloc>()
                   .add(LoadClients(''));
               clientNavigatorKey.currentContext!.read<DossierBloc>().add(
-                  LoadDossiers(
-                      widget.dossier!.statusFolder!, widget.dossier!.idClient!));
+                  LoadDossiers(widget.dossier!.statusFolder!,
+                      widget.dossier!.idClient!));
               accueilNavigatorKey.currentContext!
                   .read<StatsBloc>()
                   .add(LoadStats());
@@ -324,14 +324,15 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                               if (_selectedOperation == '/') {
                                 setState(() {
                                   iteration!.amountTND =
-                                      iteration!.amountDevise! / iteration!.taux!;
+                                      iteration!.amountDevise! /
+                                          iteration!.taux!;
                                   amountController.text =
                                       iteration!.amountTND!.toStringAsFixed(0);
                                 });
                               } else {
                                 setState(() {
-                                  iteration!.amountTND =
-                                      iteration!.taux! * iteration!.amountDevise!;
+                                  iteration!.amountTND = iteration!.taux! *
+                                      iteration!.amountDevise!;
                                   amountController.text =
                                       iteration!.amountTND!.toStringAsFixed(0);
                                 });
@@ -355,7 +356,6 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                         children: [
                           Expanded(
                             child: DropdownButtonFormField2<String>(
-                              scrollbarAlwaysShow: false,
                               value: _selectedOperation,
                               style: AppThemes.bodyGreyTextStyle
                                   .copyWith(color: AppColor.appSecondaryColor),
@@ -400,16 +400,19 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                                 ),
                               ),
                               isExpanded: true,
-                              iconSize: 32,
-                              icon: const Icon(
-                                  Icons.keyboard_arrow_down_outlined),
-                              buttonHeight: 50,
-                              buttonPadding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              dropdownMaxHeight: 250,
+                              iconStyleData: IconStyleData(
+                                  iconSize: 32,
+                                  icon: const Icon(
+                                      Icons.keyboard_arrow_down_outlined)),
+                              buttonStyleData: ButtonStyleData(
+                                  height: 50,
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10)),
+                              dropdownStyleData: DropdownStyleData(
+                                  maxHeight: 250,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(5.0))),
                               items: ['/', '*']
                                   .map((item) => DropdownMenuItem<String>(
                                         value: item,
@@ -427,14 +430,18 @@ class _AddTransactonScreenState extends State<AddTransactonScreen> {
                                     _selectedOperation!.isNotEmpty) {
                                   if (_selectedOperation == '/') {
                                     iteration!.amountTND =
-                                        iteration!.amountDevise! / iteration!.taux!;
-                                    amountController.text =
-                                        iteration!.amountTND!.toStringAsFixed(0);
+                                        iteration!.amountDevise! /
+                                            iteration!.taux!;
+                                    amountController.text = iteration!
+                                        .amountTND!
+                                        .toStringAsFixed(0);
                                   } else {
                                     iteration!.amountTND =
-                                        iteration!.amountDevise! * iteration!.taux!;
-                                    amountController.text =
-                                        iteration!.amountTND!.toStringAsFixed(0);
+                                        iteration!.amountDevise! *
+                                            iteration!.taux!;
+                                    amountController.text = iteration!
+                                        .amountTND!
+                                        .toStringAsFixed(0);
                                   }
                                 }
                               },
